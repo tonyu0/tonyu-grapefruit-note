@@ -9,34 +9,22 @@ const emits = defineEmits(['pressed'])
 function getAlert() {
     emits('pressed', 'detailed')
 }
-interface props {
+interface Props {
     name?: string
 }
-const props = withDefaults(defineProps<props>(), { name: 'tonyu' })
+const props = withDefaults(defineProps<Props>(), { name: 'tonyu' })
 </script>
 
 <template>
-  <h1>{{ props.name }}, Hello.</h1>
-  <button @click="getAlert">
-    Press!!!
-  </button>
-  <button
-    type="button"
-    @click="count++"
-  >
-    count is: {{ count }}
-  </button>
-  <input v-model="count">
-  <svg>
-    <g>
-      <circle
-        cx="30"
-        cy="30"
-        r="30"
-        fill="red"
-      />
-    </g>
-  </svg>
+    <h1>{{ props.name }}, Hello.</h1>
+    <button @click="getAlert">Press!!!</button>
+    <button type="button" @click="count++">count is: {{ count }}</button>
+    <input v-model="count" />
+    <svg>
+        <g>
+            <circle cx="30" cy="30" r="30" fill="red" />
+        </g>
+    </svg>
 </template>
 
 <style scoped>

@@ -4,12 +4,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { directus } from '@/services/directus'
 import { formatRelativeTime } from '@/utils/format-relative-time'
 import { getAssetURL } from '@/utils/get-asset-url'
-import IconBack from '@/components/icons/Back.vue'
-import IconLink from '@/components/icons/Link.vue'
-import IconYoutube from '@/components/icons/Youtube.vue'
-import IconLinkedin from '@/components/icons/Linkedin.vue'
-import IconTwitter from '@/components/icons/Twitter.vue'
-import IconGithub from '@/components/icons/Github.vue'
+import IconBack from '@/components/icons/BackIcon.vue'
 import MoreArticles from '@/components/MoreArticles.vue'
 const router = useRouter()
 const route = useRoute()
@@ -50,59 +45,47 @@ async function fetchData() {
 </script>
 
 <template>
-  <div class="current-article">
-    <section v-if="article">
-      <div class="container">
-        <RouterLink
-          to="/"
-          class="current-article__backlink"
-        >
-          <IconBack class="icon" />
-          <span>Back to Articles</span>
-        </RouterLink>
-        <h1 class="current-article__title">
-          {{ article.title }}
-        </h1>
-        <div class="current-article__detail">
-          <div class="current-article__wrapperOuter">
-            <div class="current-article__wrapperInner">
-              <!-- <div class="current-article__authorImage">
+    <div class="current-article">
+        <section v-if="article">
+            <div class="container">
+                <RouterLink to="/" class="current-article__backlink">
+                    <IconBack class="icon" />
+                    <span>Back to Articles</span>
+                </RouterLink>
+                <h1 class="current-article__title">
+                    {{ article.title }}
+                </h1>
+                <div class="current-article__detail">
+                    <div class="current-article__wrapperOuter">
+                        <div class="current-article__wrapperInner">
+                            <!-- <div class="current-article__authorImage">
                 <img
                   :src="getAssetURL(article.author.avatar)"
                   alt=""
                   loading="lazy"
                 />
               </div> -->
-              <div>
-                <!-- <div class="current-article__authorName">
+                            <div>
+                                <!-- <div class="current-article__authorName">
                   {{
                     `${article.author.first_name} ${article.author.last_name}`
                   }}
                 </div> -->
-                <div class="current-article__time">
-                  {{ article.date_created }}
+                                <div class="current-article__time">
+                                    {{ article.date_created }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="current-article_coverImage">
+                        <img :src="getAssetURL(article.image)" alt="" />
+                    </div>
                 </div>
-              </div>
+                <div class="current-article__body">
+                    <div class="current-article__bodyContent" v-html="article.body" />
+                </div>
             </div>
-          </div>
-          <div class="current-article_coverImage">
-            <img
-              :src="getAssetURL(article.image)"
-              alt=""
-            >
-          </div>
-        </div>
-        <div class="current-article__body">
-          <div
-            class="current-article__bodyContent"
-            v-html="article.body"
-          />
-        </div>
-      </div>
-    </section>
-    <MoreArticles
-      v-if="moreArticles"
-      :articles="moreArticles"
-    />
-  </div>
+        </section>
+        <MoreArticles v-if="moreArticles" :articles="moreArticles" />
+    </div>
 </template>

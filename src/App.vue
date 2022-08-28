@@ -3,9 +3,9 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 // ~~~ Add from directus example ~~~
 import { RouterView } from 'vue-router'
-import Notice from '@/components/Notice.vue'
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import Notice from '@/components/LayoutNotice.vue'
+import Header from '@/components/LayoutHeader.vue'
+import Footer from '@/components/LayoutFooter.vue'
 </script>
 
 <!-- <script lang="ts">
@@ -17,13 +17,13 @@ export default {
 </script> -->
 
 <template>
-  <div class="layout">
-    <router-link class="flex text-4xl text-yellow-700" to="/">tonyu lab</router-link>
-    <Notice />
-    <Header />
-    <RouterView :key="$route.fullPath" />
-    <Footer />
-  </div>
+    <div class="layout">
+        <router-link class="flex text-4xl text-yellow-700" to="/"> tonyu lab </router-link>
+        <Notice />
+        <Header />
+        <RouterView :key="$route.fullPath" />
+        <Footer />
+    </div>
 </template>
 
 <style scoped>

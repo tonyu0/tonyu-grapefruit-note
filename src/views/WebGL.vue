@@ -1,71 +1,39 @@
 <template>
-  <div id="main">
-    <header>WebGL with Typescript playground</header>
-    <aside id="index">
-      <section>
-        <h1>Shader Menu</h1>
-        <dl>
-          <dd>
-            <a
-              href="main"
-              title="main"
-            >Main page</a>
-          </dd>
-          <dd>
-            <a
-              href="app"
-              title="app"
-            >Game Engine App (under construction)</a>
-          </dd>
-          <dd>
-            <a
-              href="page0"
-              title="page0"
-            >Page 0</a>
-          </dd>
-          <dd>
-            <a
-              href="page1"
-              title="page1"
-            >Page 1</a>
-          </dd>
-          <dd>
-            <a
-              href="glsl"
-              title="glsl"
-            >Hanabi</a>
-          </dd>
-        </dl>
-      </section>
-    </aside>
-    <div id="content">
-      <p>
-        <input
-          id="alpha"
-          type="range"
-          min="0"
-          max="100"
-          value="70"
-        > vertex alpha
-      </p>
-      <p>
-        <input
-          id="transparency"
-          type="radio"
-          name="blend"
-          checked
-        > transparency
-        <input
-          id="add"
-          type="radio"
-          name="blend"
-        > add
-      </p>
-      <!-- here add script for selected feature -->
+    <div id="main">
+        <header>WebGL with Typescript playground</header>
+        <aside id="index">
+            <section>
+                <h1>Shader Menu</h1>
+                <dl>
+                    <dd>
+                        <a href="main" title="main">Main page</a>
+                    </dd>
+                    <dd>
+                        <a href="app" title="app">Game Engine App (under construction)</a>
+                    </dd>
+                    <dd>
+                        <a href="page0" title="page0">Page 0</a>
+                    </dd>
+                    <dd>
+                        <a href="page1" title="page1">Page 1</a>
+                    </dd>
+                    <dd>
+                        <a href="glsl" title="glsl">Hanabi</a>
+                    </dd>
+                </dl>
+            </section>
+        </aside>
+        <div id="content">
+            <p><input id="alpha" type="range" min="0" max="100" value="70" /> vertex alpha</p>
+            <p>
+                <input id="transparency" type="radio" name="blend" checked /> transparency
+                <input id="add" type="radio" name="blend" /> add
+            </p>
+            <!-- here add script for selected feature -->
+        </div>
+        <footer><a href="https://github.com/tonyu0/webgl-ts">Source on GitHub</a></footer>
     </div>
-    <footer><a href="https://github.com/tonyu0/webgl-ts">Source on GitHub</a></footer>
-  </div>
-  <!-- <script type="text/javascript" src="router.js"></script> -->
+    <!-- <script type="text/javascript" src="router.js"></script> -->
 </template>
 
 <style scoped>

@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { directus } from '@/services/directus'
-import { formatRelativeTime } from '@/utils/format-relative-time'
-import Article from '@/components/Article.vue'
+import ArticleItem from '@/components/ArticleItem.vue'
 const articles = ref(null)
 fetchData()
 async function fetchData() {
@@ -24,21 +23,18 @@ async function fetchData() {
 </script>
 
 <template>
-  <main>
-    <section class="main-content">
-      <div class="container">
-        <div
-          v-if="articles"
-          class="articles-grid"
-        >
-          <Article
-            v-for="(article, index) in articles"
-            :key="index"
-            :article="article"
-            :bordered="index !== articles.length - 1"
-          />
-        </div>
-      </div>
-    </section>
-  </main>
+    <main>
+        <section class="main-content">
+            <div class="container">
+                <div v-if="articles" class="articles-grid">
+                    <article-item
+                        v-for="(article, index) in articles"
+                        :key="index"
+                        :article="article"
+                        :bordered="index !== articles.length - 1"
+                    />
+                </div>
+            </div>
+        </section>
+    </main>
 </template>

@@ -1,5 +1,5 @@
 import HelloWorldVue from '@/components/HelloWorld.vue'
-import HomeVue from '@/views/Home.vue'
+import HomeVue from '@/views/HomePage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -18,7 +18,7 @@ const router = createRouter({
         {
             path: '/articles/:id',
             name: 'article',
-            component: () => import('@/views/Article.vue'),
+            component: () => import('@/views/ArticleDetail.vue'),
         },
         {
             path: '/:catchAll(.*)',
@@ -38,7 +38,7 @@ const router = createRouter({
         {
             path: '/about/:slug',
             name: 'About',
-            component: () => import('../views/About.vue'),
+            component: () => import('@/views/AboutItem.vue'),
         },
     ],
 })
