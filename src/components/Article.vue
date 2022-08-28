@@ -1,26 +1,36 @@
 <script setup>
-import { RouterLink } from "vue-router";
-import { getAssetURL } from "@/utils/get-asset-url";
+import { RouterLink } from 'vue-router'
+import { getAssetURL } from '@/utils/get-asset-url'
 
 defineProps({
-  article: {
-    type: Object,
-    required: true,
-  },
-  bordered: {
-    type: Boolean,
-    required: true,
-  },
-});
+    article: {
+        type: Object,
+        required: true,
+    },
+    bordered: {
+        type: Boolean,
+        required: true,
+    },
+})
 </script>
 
 <template>
-  <article class="article" :class="{ bordered }">
+  <article
+    class="article"
+    :class="{ bordered }"
+  >
     <div class="article__topWrapper">
       <div class="article__imageWrapper">
-        <img :src="getAssetURL(article.image)" alt="" loading="lazy" />
+        <img
+          :src="getAssetURL(article.image)"
+          alt=""
+          loading="lazy"
+        >
       </div>
-      <span aria-hidden="true" class="tag">Writing</span>
+      <span
+        aria-hidden="true"
+        class="tag"
+      >Writing</span>
     </div>
     <div class="article__bottomWrapper">
       <h1 class="article__title">
@@ -40,8 +50,12 @@ defineProps({
           <!-- <div class="article__detailInnerAuthor">
             {{ `${article.author.first_name} ${article.author.last_name}` }}
           </div> -->
-          <div class="article__detailInnerTime">{{ article.date_created }}</div>
-          <div class="article__detailInnerCategory">{{article.body}}</div>
+          <div class="article__detailInnerTime">
+            {{ article.date_created }}
+          </div>
+          <div class="article__detailInnerCategory">
+            {{ article.body }}
+          </div>
         </div>
       </div>
     </div>
