@@ -16,7 +16,7 @@ export function formatRelativeTime(fromDate, toDate) {
 	const elapsed = fromDate - (toDate || new Date())
 
 	// "Math.abs" accounts for both "past" & "future" scenarios
-	for (let u in UNITS) {
+	for (const u in UNITS) {
 		if (Math.abs(elapsed) > UNITS[u] || u === "second")
 			return rtf.format(Math.round(elapsed / UNITS[u]), u)
 	}

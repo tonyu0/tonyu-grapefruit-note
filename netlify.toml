@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+# reference: https://router.vuejs.org/guide/essentials/history-mode.html
