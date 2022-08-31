@@ -22,20 +22,29 @@
 
 <script lang="ts">
 import { reactive, toRefs, computed } from 'vue'
+interface Pokemon {
+	name: string
+}
+interface State {
+	pokemons: Pokemon[],
+	urlIdLookup: object,
+	text: string,
+	filtered: Pokemon[]
+}
 export default {
 	components: {},
 	setup() {
-		const state: any = reactive({
+		const state: State = reactive({
 			pokemons: [],
 			urlIdLookup: {},
 			text: '',
 			filtered: computed(() => update()),
 		})
-		function update(): any {
+		function update(): Pokemon[] {
 			if (!state.text) {
 				return []
 			}
-			return state.pokemons.filter((pokemon: any) => pokemon.name.startsWith(state.text))
+			return state.pokemons.filter((pokemon: Pokemon) => pokemon.name.startsWith(state.text))
 		}
 
 		fetch('https://pokeapi.co/api/v2/pokemon?offset=0')
@@ -43,7 +52,7 @@ export default {
 			.then((data) => {
 				state.pokemons = data.results
 				state.urlIdLookup = data.results.reduce(
-					(acc: any, cur: any, idx: number) => (acc = { ...acc, [cur.name]: idx + 1 }),
+					(acc: object, cur: Pokemon, idx: number) => (acc = { ...acc, [cur.name]: idx + 1 }),
 					{},
 				)
 			})

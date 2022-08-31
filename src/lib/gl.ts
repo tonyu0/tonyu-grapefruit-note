@@ -13,9 +13,9 @@ export class GLUtilities {
         // document.body.appendChild(canvas)
 
         const gl: WebGLRenderingContext | null = canvas.getContext('webgl', { stencil: true })
-        if (gl === undefined) {
+        if (gl === null) {
             throw new Error('Unable to initialize WebGL!!!')
         }
-        return [canvas, gl!]
+        return [canvas, gl]
     }
 }
