@@ -26,26 +26,10 @@
 </template>
 
 <script lang="ts" setup>
-	import {onMounted} from 'vue'
-	import { GLUtilities } from '@/lib/gl';
-	onMounted(() => {
-	const [canvas, gl] = GLUtilities.initialize()
-	function mouseMove(e: MouseEvent) {
-	const cw = canvas.width
-	const ch = canvas.height
-	const mx = e.offsetX / cw
-	const my = e.offsetY / ch
-	console.log(mx, my)
-	}
-	canvas.addEventListener('mousemove', mouseMove, true)
-  canvas.width = 500
-  canvas.height = 300
-	// gl.enable(gl.CULL_FACE)
-	gl.enable(gl.DEPTH_TEST)
-	gl.depthFunc(gl.LEQUAL)
-	gl.enable(gl.STENCIL_TEST)
-
-  gl.clearColor(0.8, 0.0, 0.8, 1.0)
-  gl.clear(gl.COLOR_BUFFER_BIT)
+import { onMounted } from 'vue'
+import Engine from '@/lib/engine'
+onMounted(() => {
+	const engine = new Engine()
+	engine.loop()
 })
 </script>

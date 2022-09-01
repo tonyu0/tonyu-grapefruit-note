@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-  import WebGLCanvas from '@/components/WebGLCanvas.vue';
+import WebGLCanvas from '@/components/WebGLCanvas.vue'
 </script>
 
 <style scoped>

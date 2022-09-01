@@ -26,9 +26,9 @@ interface Pokemon {
 	name: string
 }
 interface State {
-	pokemons: Pokemon[],
-	urlIdLookup: object,
-	text: string,
+	pokemons: Pokemon[]
+	urlIdLookup: object
+	text: string
 	filtered: Pokemon[]
 }
 export default {
