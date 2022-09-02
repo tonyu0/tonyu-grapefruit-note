@@ -22,10 +22,10 @@
 
 <script lang="ts">
 import { reactive, toRefs, computed } from 'vue'
-interface Pokemon {
+type Pokemon = {
 	name: string
 }
-interface State {
+type State = {
 	pokemons: Pokemon[]
 	urlIdLookup: object
 	text: string
