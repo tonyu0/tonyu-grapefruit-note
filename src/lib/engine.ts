@@ -73,7 +73,6 @@ export default class Engine {
 		]
 		this._buffer.pushBackData(vertices)
 		this._buffer.upload()
-		console.log(this._buffer)
 		this._buffer.unbind()
 		return this._buffer
 	}

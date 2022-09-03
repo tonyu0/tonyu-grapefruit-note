@@ -1,5 +1,6 @@
 <template>
   <div id="content">
+    Now {{ props.shaderType }}
     <p>
       <input
         id="alpha"
@@ -28,6 +29,14 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Engine from '@/lib/engine'
+interface  CanvasProps {
+  shaderType?: number
+}
+
+const props = withDefaults(defineProps<CanvasProps>(),{
+  shaderType: 0
+})
+
 onMounted(() => {
 	const engine = new Engine()
 	engine.loop()

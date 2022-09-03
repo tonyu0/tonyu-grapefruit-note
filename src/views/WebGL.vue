@@ -4,30 +4,29 @@
     <aside id="index">
       <section>
         <h1>Shader Menu</h1>
-        <dl>
-          <dd>
-            <button>Main page</button>
-          </dd>
-          <dd>
-            <button>App</button>
-          </dd>
-          <dd>
-            <button>Page</button>
-          </dd>
-          <dd>
-            <button>GLSL</button>
-          </dd>
-        </dl>
+        <select v-model="shaderType">
+          <option
+            disabled
+            value=""
+          >
+            Please select one
+          </option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
       </section>
     </aside>
-    <WebGLCanvas />
-    <a href="https://github.com/tonyu0/webgl-ts">Source on GitHub</a>
+    <WebGLCanvas :shader-type="shaderType" />
+    <a href="https://github.com/tonyu0/tonyu-lab">Source on GitHub</a>
   </div>
   <!-- <script type="text/javascript" src="router.js"></script> -->
 </template>
 
 <script setup>
 import WebGLCanvas from '@/components/WebGLCanvas.vue'
+import {ref} from 'vue'
+const shaderType = ref(0)
 </script>
 
 <style scoped>
