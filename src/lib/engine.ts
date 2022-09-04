@@ -1,32 +1,39 @@
 ﻿import { GLUtilities } from '@/lib/gl/gl'
 import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
+import basicVS from '@/lib/shaders/basicVS.vert'
+// import basicFS from '@/lib/shaders/basicFS.frag'
+import okuyukiFS from '@/lib/shaders/okuyuki.frag'
 
 /** 中枢 */
 export default class Engine {
-	// canvas, shader, bufferをくらすとして管理
 	private _canvas: HTMLCanvasElement
 	private _shader: GLShader
-	private _buffer: GLBuffer
+	private _vertexBuffer: GLBuffer
+	private _indexBuffer: GLBuffer
+	private _startTime: number
+	private _mouseX = 0
+	private _mouseY = 0
 
-	/** メインループを開始する */
 	public constructor() {
+		this._startTime = new Date().getTime()
 		this._canvas = GLUtilities.initialize()
 		GLUtilities.gl.clearColor(0.6, 0, 0.9, 1)
 		// GLUtilities.gl.enable(GLUtilities.gl.CULL_FACE)
 		GLUtilities.gl.enable(GLUtilities.gl.DEPTH_TEST)
 		GLUtilities.gl.depthFunc(GLUtilities.gl.LEQUAL)
 		GLUtilities.gl.enable(GLUtilities.gl.STENCIL_TEST)
-
 		this._shader = this.loadShaders()
 		this._shader.use()
-		this._buffer = this.createBuffer()
+		this._vertexBuffer = new GLBuffer(0)
+		this._indexBuffer = new GLBuffer(0)
+		this.createVertexBuffer()
+		this.createIndexBuffer()
 		this.addEventListener()
 		this.resize()
 		this.loop()
 	}
 
-	/** 画面のリサイズに対応する */
 	public resize(): void {
 		if (this._canvas !== undefined) {
 			this._canvas.width = window.innerWidth / 2
@@ -39,9 +46,8 @@ export default class Engine {
 		const mouseMove = (e: MouseEvent) => {
 			const cw = this._canvas.width
 			const ch = this._canvas.height
-			const mx = e.offsetX / cw
-			const my = e.offsetY / ch
-			console.log(mx, my)
+			this._mouseX = e.offsetX / cw
+			this._mouseY = e.offsetY / ch
 		}
 		this._canvas.addEventListener('mousemove', mouseMove, true)
 	}
@@ -51,46 +57,60 @@ export default class Engine {
 	public loop(): void {
 		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT)
 		// set uniforms
-		const colorPosition = this._shader.getUniformLocation('u_color')
-		GLUtilities.gl.uniform4f(colorPosition, 1, 0.5, 0, 1)
+		// const colorPosition = this._shader.getUniformLocation('u_color')
+		// GLUtilities.gl.uniform4f(colorPosition, 1, 0.5, 0, 1)
 
-		this._buffer.bind()
-		this._buffer.draw()
+
+		const time = (new Date().getTime() - this._startTime) * 0.001
+		GLUtilities.gl.clearColor(0, 0, 0, 0) // canvas初期化の色
+		GLUtilities.gl.clearDepth(1.0) // canvas初期化の深度
+		GLUtilities.gl.clearStencil(0)
+		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT | GLUtilities.gl.DEPTH_BUFFER_BIT | GLUtilities.gl.STENCIL_BUFFER_BIT) // canvas初期化
+		GLUtilities.gl.uniform1f(this._shader.getUniformLocation('time'), time)
+		GLUtilities.gl.uniform2f(this._shader.getUniformLocation('mouse'), this._mouseX, this._mouseY)
+		GLUtilities.gl.uniform2f(this._shader.getUniformLocation('resolution'), this._canvas.width, this._canvas.height)
+
+		this._vertexBuffer.bind()
+		this._indexBuffer.bind()
+		this._indexBuffer.draw()
 		requestAnimationFrame(this.loop.bind(this))
 	}
 
-	private createBuffer(): GLBuffer {
-		this._buffer = new GLBuffer(3)
-		const positionAttribute = new AttrInfo()
-		positionAttribute.location = this._shader.getAttributeLocation('position')
-		positionAttribute.offset = 0
-		positionAttribute.size = 3
-		this._buffer.addAttributeLocation(positionAttribute)
+	private createVertexBuffer() {
+		this._vertexBuffer = new GLBuffer(3, GLUtilities.gl.FLOAT, GLUtilities.gl.ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
 
+		const attributeLocations: GLint[] = [this._shader.getAttributeLocation('position')]
+		const attributeStrides: number[] = [3]
 		const vertices = [
 			// x, y, z
-			0, 0, 0, 0, 0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, 0, 0.5, 0, 0, 0, 0, 0,
+			-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0
 		]
-		this._buffer.pushBackData(vertices)
-		this._buffer.upload()
-		this._buffer.unbind()
-		return this._buffer
+		let currentOffset = 0
+		for (let i = 0; i < attributeLocations.length; ++i) {
+
+			const attributeInfo = new AttrInfo()
+			attributeInfo.location = attributeLocations[i]
+			attributeInfo.offset = currentOffset
+			attributeInfo.size = attributeStrides[i]
+			this._vertexBuffer.addAttributeLocation(attributeInfo)
+			currentOffset += attributeStrides[i]
+		}
+
+		this._vertexBuffer.pushBackData(vertices)
+		this._vertexBuffer.upload()
+		this._vertexBuffer.unbind()
+	}
+	private createIndexBuffer() {
+		this._indexBuffer = new GLBuffer(1, GLUtilities.gl.UNSIGNED_SHORT, GLUtilities.gl.ELEMENT_ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
+		const indices = [0, 2, 1, 1, 2, 3]
+		this._indexBuffer.pushBackData(indices)
+		this._indexBuffer.upload()
+		this._indexBuffer.unbind()
 	}
 
 	private loadShaders(): GLShader {
-		const vertexShaderSource = `
-attribute vec3 position;
-uniform   mat4 mvpMatrix;
-void main() {
-    gl_Position =  vec4(position, 1.0);
-}`
-		const fragmentShaderSource = `
-precision mediump float;
-
-uniform vec4 u_color;
-void main() {
-    gl_FragColor = u_color;
-}`
+		const vertexShaderSource = basicVS
+		const fragmentShaderSource = okuyukiFS
 		return new GLShader('basic', vertexShaderSource, fragmentShaderSource)
 	}
 }

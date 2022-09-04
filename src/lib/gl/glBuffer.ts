@@ -109,7 +109,7 @@ export class GLBuffer {
 		for (const itr of this._attributes) {
 			GLUtilities.gl.disableVertexAttribArray(itr.location)
 		}
-		GLUtilities.gl.bindBuffer(GLUtilities.gl.ARRAY_BUFFER, null)
+		GLUtilities.gl.bindBuffer(this._targetBufferType, null)
 	}
 
 	/**
