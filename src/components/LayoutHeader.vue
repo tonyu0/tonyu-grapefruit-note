@@ -8,9 +8,6 @@ import { RouterLink } from 'vue-router'
       <router-link to="/">
         記事たち
       </router-link>
-      <router-link to="/DBTutorial">
-        書いたもの
-      </router-link>
       <router-link to="/webgl">
         WebGL
       </router-link>

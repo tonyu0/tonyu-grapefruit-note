@@ -1,6 +1,11 @@
 <template>
-  <div id="main">
-    <header>WebGL with Typescript playground</header>
+  <div
+    id="main"
+    class="mb-6"
+  >
+    <header class="border-2 border-blue-800">
+      WebGL with Typescript playground
+    </header>
     <aside id="index">
       <section>
         <h1>Shader Menu</h1>
