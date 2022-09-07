@@ -1,6 +1,6 @@
 <template>
   <div id="content">
-    Now {{ props.shaderType }}
+    Now {{ fragmentShaderSource }}
     <p>
       <input
         id="alpha"
@@ -30,15 +30,16 @@
 import { onMounted } from 'vue'
 import Engine from '@/lib/engine'
 interface  CanvasProps {
-  shaderType?: number
+  fragmentShaderSource?: string
 }
 
 const props = withDefaults(defineProps<CanvasProps>(),{
-  shaderType: 0
+  fragmentShaderSource: ""  
 })
 
 onMounted(() => {
 	const engine = new Engine()
 	engine.loop()
+  // engine.setFragmentShader(props.fragmentShaderSource)
 })
 </script>

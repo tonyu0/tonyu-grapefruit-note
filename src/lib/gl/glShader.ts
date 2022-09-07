@@ -52,10 +52,7 @@ export default class GLShader {
 	 * Get the location of an uniform with the provided name.
 	 * @param name The name of uniform
 	 */
-	public getUniformLocation(name: string): WebGLUniformLocation {
-		if (this._uniforms[name] === undefined) {
-			throw new Error(`Unable to find uniform named '${name}' in shader named '${this._name}`)
-		}
+	public getUniformLocation(name: string): WebGLUniformLocation | undefined {
 		return this._uniforms[name]
 	}
 

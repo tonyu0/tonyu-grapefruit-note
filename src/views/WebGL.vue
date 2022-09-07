@@ -9,20 +9,24 @@
     <aside id="index">
       <section>
         <h1>Shader Menu</h1>
-        <select v-model="shaderType">
+        <select v-model="fragmentShaderSource">
           <option
             disabled
             value=""
           >
             Please select one
           </option>
-          <option>A</option>
-          <option>B</option>
-          <option>C</option>
+          <option
+            v-for="fs in fragmentShaderList"
+            :key="fs.name"
+            :value="fs.source"
+          >
+            {{ fs.name }}
+          </option>
         </select>
       </section>
     </aside>
-    <WebGLCanvas :shader-type="shaderType" />
+    <WebGLCanvas :fragment-shader-source="fragmentShaderSource" />
     <a href="https://github.com/tonyu0/tonyu-lab">Source on GitHub</a>
   </div>
   <!-- <script type="text/javascript" src="router.js"></script> -->
@@ -31,7 +35,23 @@
 <script setup>
 import WebGLCanvas from '@/components/WebGLCanvas.vue'
 import {ref} from 'vue'
-const shaderType = ref(0)
+import basicVS from '@/lib/shaders/basicVS.vert'
+import basicFS from '@/lib/shaders/basicFS.frag'
+import okuyukiFS from '@/lib/shaders/okuyuki.frag'
+import enFS from '@/lib/shaders/en.frag'
+// const shaderType = ref(0)
+const fragmentShaderSource = ref("")
+const fragmentShaderList = [
+{name: 'basic', source: basicFS}  
+,{
+  name: "okuyuki",
+  source: okuyukiFS
+},
+{
+  name: "en",
+  source: enFS
+}
+]
 </script>
 
 <style scoped>

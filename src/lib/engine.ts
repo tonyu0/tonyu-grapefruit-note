@@ -3,7 +3,7 @@ import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
 import basicVS from '@/lib/shaders/basicVS.vert'
 // import basicFS from '@/lib/shaders/basicFS.frag'
-import okuyukiFS from '@/lib/shaders/okuyuki.frag'
+import okuyukiFS from '@/lib/shaders/en.frag'
 
 /** 中枢 */
 export default class Engine {
@@ -56,19 +56,25 @@ export default class Engine {
 	/** main loop */
 	public loop(): void {
 		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT)
-		// set uniforms
 		// const colorPosition = this._shader.getUniformLocation('u_color')
 		// GLUtilities.gl.uniform4f(colorPosition, 1, 0.5, 0, 1)
-
-
 		const time = (new Date().getTime() - this._startTime) * 0.001
-		GLUtilities.gl.clearColor(0, 0, 0, 0) // canvas初期化の色
-		GLUtilities.gl.clearDepth(1.0) // canvas初期化の深度
+		GLUtilities.gl.clearColor(0, 0, 0, 0)
+		GLUtilities.gl.clearDepth(1.0)
 		GLUtilities.gl.clearStencil(0)
 		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT | GLUtilities.gl.DEPTH_BUFFER_BIT | GLUtilities.gl.STENCIL_BUFFER_BIT) // canvas初期化
-		GLUtilities.gl.uniform1f(this._shader.getUniformLocation('time'), time)
-		GLUtilities.gl.uniform2f(this._shader.getUniformLocation('mouse'), this._mouseX, this._mouseY)
-		GLUtilities.gl.uniform2f(this._shader.getUniformLocation('resolution'), this._canvas.width, this._canvas.height)
+		const timeUniformLocation = this._shader.getUniformLocation('time')
+		const mouseUniformLocation = this._shader.getUniformLocation('mouse')
+		const resolutionUniformLocation = this._shader.getUniformLocation('resolution')
+		if (timeUniformLocation) {
+			GLUtilities.gl.uniform1f(timeUniformLocation, time)
+		}
+		if (mouseUniformLocation) {
+			GLUtilities.gl.uniform2f(mouseUniformLocation, this._mouseX, this._mouseY)
+		}
+		if (resolutionUniformLocation) {
+			GLUtilities.gl.uniform2f(resolutionUniformLocation, this._canvas.width, this._canvas.height)
+		}
 
 		this._vertexBuffer.bind()
 		this._indexBuffer.bind()
@@ -112,5 +118,9 @@ export default class Engine {
 		const vertexShaderSource = basicVS
 		const fragmentShaderSource = okuyukiFS
 		return new GLShader('basic', vertexShaderSource, fragmentShaderSource)
+	}
+	public setFragmentShader(fragmentShaderSource: string) {
+		this._shader = new GLShader('basic', basicVS, fragmentShaderSource)
+		this._shader.use()
 	}
 }
