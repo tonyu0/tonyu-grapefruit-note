@@ -1,6 +1,5 @@
 <template>
   <div id="content">
-    Now {{ fragmentShaderSource }}
     <p>
       <input
         id="alpha"
@@ -23,23 +22,33 @@
         name="blend"
       > add
     </p>
+    <code>{{ fragmentShaderSource }}</code>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import Engine from '@/lib/engine'
 interface  CanvasProps {
+  vertexShaderSource?: string
   fragmentShaderSource?: string
 }
 
 const props = withDefaults(defineProps<CanvasProps>(),{
+  vertexShaderSource: "",
   fragmentShaderSource: ""  
 })
 
+let engine: Engine
 onMounted(() => {
-	const engine = new Engine()
+	engine = new Engine()
 	engine.loop()
-  // engine.setFragmentShader(props.fragmentShaderSource)
+})
+
+watch(props, () => {
+  if(props.vertexShaderSource && props.fragmentShaderSource)
+  {
+    engine.loadShaders(props.vertexShaderSource, props.fragmentShaderSource)
+  }
 })
 </script>

@@ -1,14 +1,9 @@
 ﻿import { GLUtilities } from '@/lib/gl/gl'
 import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
-import basicVS from '@/lib/shaders/basicVS.vert'
-// import basicFS from '@/lib/shaders/basicFS.frag'
-import okuyukiFS from '@/lib/shaders/en.frag'
-
-/** 中枢 */
 export default class Engine {
 	private _canvas: HTMLCanvasElement
-	private _shader: GLShader
+	private _shader: GLShader = new GLShader("", "", "")
 	private _vertexBuffer: GLBuffer
 	private _indexBuffer: GLBuffer
 	private _startTime: number
@@ -23,12 +18,8 @@ export default class Engine {
 		GLUtilities.gl.enable(GLUtilities.gl.DEPTH_TEST)
 		GLUtilities.gl.depthFunc(GLUtilities.gl.LEQUAL)
 		GLUtilities.gl.enable(GLUtilities.gl.STENCIL_TEST)
-		this._shader = this.loadShaders()
-		this._shader.use()
 		this._vertexBuffer = new GLBuffer(0)
 		this._indexBuffer = new GLBuffer(0)
-		this.createVertexBuffer()
-		this.createIndexBuffer()
 		this.addEventListener()
 		this.resize()
 		this.loop()
@@ -63,23 +54,27 @@ export default class Engine {
 		GLUtilities.gl.clearDepth(1.0)
 		GLUtilities.gl.clearStencil(0)
 		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT | GLUtilities.gl.DEPTH_BUFFER_BIT | GLUtilities.gl.STENCIL_BUFFER_BIT) // canvas初期化
-		const timeUniformLocation = this._shader.getUniformLocation('time')
-		const mouseUniformLocation = this._shader.getUniformLocation('mouse')
-		const resolutionUniformLocation = this._shader.getUniformLocation('resolution')
-		if (timeUniformLocation) {
-			GLUtilities.gl.uniform1f(timeUniformLocation, time)
-		}
-		if (mouseUniformLocation) {
-			GLUtilities.gl.uniform2f(mouseUniformLocation, this._mouseX, this._mouseY)
-		}
-		if (resolutionUniformLocation) {
-			GLUtilities.gl.uniform2f(resolutionUniformLocation, this._canvas.width, this._canvas.height)
-		}
 
-		this._vertexBuffer.bind()
-		this._indexBuffer.bind()
-		this._indexBuffer.draw()
+		if (this._shader) {
+			const timeUniformLocation = this._shader.getUniformLocation('time')
+			const mouseUniformLocation = this._shader.getUniformLocation('mouse')
+			const resolutionUniformLocation = this._shader.getUniformLocation('resolution')
+			if (timeUniformLocation) {
+				GLUtilities.gl.uniform1f(timeUniformLocation, time)
+			}
+			if (mouseUniformLocation) {
+				GLUtilities.gl.uniform2f(mouseUniformLocation, this._mouseX, this._mouseY)
+			}
+			if (resolutionUniformLocation) {
+				GLUtilities.gl.uniform2f(resolutionUniformLocation, this._canvas.width, this._canvas.height)
+			}
+
+			this._vertexBuffer.bind()
+			this._indexBuffer.bind()
+			this._indexBuffer.draw()
+		}
 		requestAnimationFrame(this.loop.bind(this))
+
 	}
 
 	private createVertexBuffer() {
@@ -114,13 +109,10 @@ export default class Engine {
 		this._indexBuffer.unbind()
 	}
 
-	private loadShaders(): GLShader {
-		const vertexShaderSource = basicVS
-		const fragmentShaderSource = okuyukiFS
-		return new GLShader('basic', vertexShaderSource, fragmentShaderSource)
-	}
-	public setFragmentShader(fragmentShaderSource: string) {
-		this._shader = new GLShader('basic', basicVS, fragmentShaderSource)
+	public loadShaders(vertexShaderSource: string, fragmentShaderSource: string): void {
+		this._shader = new GLShader('basic', vertexShaderSource, fragmentShaderSource)
 		this._shader.use()
+		this.createVertexBuffer()
+		this.createIndexBuffer()
 	}
 }

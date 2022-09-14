@@ -26,7 +26,10 @@
         </select>
       </section>
     </aside>
-    <WebGLCanvas :fragment-shader-source="fragmentShaderSource" />
+    <WebGLCanvas
+      :vertex-shader-source="vertexShaderSource"
+      :fragment-shader-source="fragmentShaderSource"
+    />
     <a href="https://github.com/tonyu0/tonyu-lab">Source on GitHub</a>
   </div>
   <!-- <script type="text/javascript" src="router.js"></script> -->
@@ -40,15 +43,16 @@ import basicFS from '@/lib/shaders/basicFS.frag'
 import okuyukiFS from '@/lib/shaders/okuyuki.frag'
 import enFS from '@/lib/shaders/en.frag'
 // const shaderType = ref(0)
+const vertexShaderSource = ref(basicVS)
 const fragmentShaderSource = ref("")
 const fragmentShaderList = [
-{name: 'basic', source: basicFS}  
+{name: 'basic.frag', source: basicFS}  
 ,{
-  name: "okuyuki",
+  name: "okuyuki.frag",
   source: okuyukiFS
 },
 {
-  name: "en",
+  name: "en.frag",
   source: enFS
 }
 ]
@@ -85,7 +89,7 @@ canvas {
 }
 #content {
 	width: 850px;
-	height: 550px;
+	/* height: 550px; */
 	float: left;
 	border-left: 1px solid #ccc;
 	padding: 20px;
