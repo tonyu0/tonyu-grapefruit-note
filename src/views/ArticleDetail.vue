@@ -1,11 +1,11 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { formatRelativeTime } from '@/utils/format-relative-time'
 import IconBack from '@/components/icons/BackIcon.vue'
 import MoreArticles from '@/components/MoreArticles.vue'
 // Contentful
-import { Contentful } from '@/services/contentful.ts'
+import { Contentful } from '@/services/contentful'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
 const router = useRouter()
@@ -28,8 +28,8 @@ async function fetchData() {
     router.replace({ name: 'not-found', params: { catchAll: route.path } })
   }
 }
-const getPostHtml = (str: string): string => { return documentToHtmlString(str) }
-const getDate = (date: string): string => {
+const getPostHtml = (str) => { return documentToHtmlString(str) }
+const getDate = (date) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()

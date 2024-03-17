@@ -3,7 +3,7 @@ import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
 export default class Engine {
 	private _canvas: HTMLCanvasElement
-	private _shader: GLShader
+	private _shader: GLShader | undefined
 	private _vertexBuffer: GLBuffer
 	private _indexBuffer: GLBuffer
 	private _startTime: number
@@ -81,7 +81,7 @@ export default class Engine {
 	private createVertexBuffer() {
 		this._vertexBuffer = new GLBuffer(3, GLUtilities.gl.FLOAT, GLUtilities.gl.ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
 
-		const attributeLocations: GLint[] = [this._shader.getAttributeLocation('position')]
+		const attributeLocations: GLint[] = [this._shader!.getAttributeLocation('position')]
 		const attributeStrides: number[] = [3]
 		const vertices = [
 			// x, y, z
