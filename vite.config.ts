@@ -12,4 +12,8 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)), // add
     },
   },
+  define: {
+    // https://vuejs.org/api/compile-time-flags
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
+  }
 })

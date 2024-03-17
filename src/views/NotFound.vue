@@ -6,11 +6,11 @@ import { RouterLink } from 'vue-router'
   <main class="error">
     <section>
       <div class="container">
-        <h1>Uh-oh, we can't seem to find the page you're looking for.</h1>
+        <h1>page not found</h1>
         <p>
           <RouterLink to="/">
-            Click here
-          </RouterLink> to head back to the safety of the homepage.
+            Back to Top
+          </RouterLink>
         </p>
       </div>
     </section>

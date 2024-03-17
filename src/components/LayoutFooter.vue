@@ -7,9 +7,8 @@ import IconTwitter from './icons/TwitterIcon.vue'
 
 <template>
   <footer>
-    <div class="container footer__topWrapper">
-      何か
-    </div>
+    <!-- <div class="container footer__topWrapper">
+    </div> -->
     <div class="container footer__bottomWrapper">
       <span class="footer__copyright">© {{ new Date().getFullYear() }} <span class="underline">copy right</span></span>
       <ul class="footer__socials">

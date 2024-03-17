@@ -3,7 +3,7 @@ import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
 export default class Engine {
 	private _canvas: HTMLCanvasElement
-	private _shader: GLShader = new GLShader("", "", "")
+	private _shader: GLShader
 	private _vertexBuffer: GLBuffer
 	private _indexBuffer: GLBuffer
 	private _startTime: number
@@ -56,6 +56,7 @@ export default class Engine {
 		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT | GLUtilities.gl.DEPTH_BUFFER_BIT | GLUtilities.gl.STENCIL_BUFFER_BIT) // canvas初期化
 
 		if (this._shader) {
+			this._shader.use() // always use the target shader before taking the uniform locations
 			const timeUniformLocation = this._shader.getUniformLocation('time')
 			const mouseUniformLocation = this._shader.getUniformLocation('mouse')
 			const resolutionUniformLocation = this._shader.getUniformLocation('resolution')

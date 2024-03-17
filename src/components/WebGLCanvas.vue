@@ -1,54 +1,53 @@
 <template>
   <div id="content">
-    <p>
-      <input
-        id="alpha"
-        type="range"
-        min="0"
-        max="100"
-        value="70"
-      > vertex alpha
-    </p>
-    <p>
-      <input
-        id="transparency"
-        type="radio"
-        name="blend"
-        checked
-      > transparency
-      <input
-        id="add"
-        type="radio"
-        name="blend"
-      > add
-    </p>
-    <code>{{ fragmentShaderSource }}</code>
+    <button @click="isShowCode = !isShowCode" :class="{ '_state-show': isShowCode }">Show Code</button>
+    <transition name="slide">
+      <code v-if="isShowCode">{{ fragmentShaderSource }}</code>
+    </transition>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, ref } from 'vue'
 import Engine from '@/lib/engine'
-interface  CanvasProps {
+interface CanvasProps {
   vertexShaderSource?: string
   fragmentShaderSource?: string
 }
+let isShowCode = ref(false)
 
-const props = withDefaults(defineProps<CanvasProps>(),{
+const props = withDefaults(defineProps<CanvasProps>(), {
   vertexShaderSource: "",
-  fragmentShaderSource: ""  
+  fragmentShaderSource: ""
 })
 
 let engine: Engine
 onMounted(() => {
-	engine = new Engine()
-	engine.loop()
+  engine = new Engine()
+  engine.loop()
 })
 
 watch(props, () => {
-  if(props.vertexShaderSource && props.fragmentShaderSource)
-  {
+  if (props.vertexShaderSource && props.fragmentShaderSource) {
     engine.loadShaders(props.vertexShaderSource, props.fragmentShaderSource)
   }
 })
 </script>
+
+<style scoped>
+code {
+  display: inline-block;
+  background-color: #eeeeee;
+  border-radius: 3px;
+}
+
+._state-show {
+  background-color: #717171;
+  text-decoration: none;
+
+  /* :after {
+    transform: rotateX(180deg);
+    margin-top: -10px;
+  } */
+}
+</style>
