@@ -1,3 +1,4 @@
+<script></script>
 <template>
   <section class="info">
     <div class="info__background">

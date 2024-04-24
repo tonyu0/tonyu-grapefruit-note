@@ -82,7 +82,7 @@ export default class Engine {
 	private createVertexBuffer() {
 		this._vertexBuffer = new GLBuffer(3, GLUtilities.gl.FLOAT, GLUtilities.gl.ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
 
-		const attributeLocations: GLint[] = [this._shader.getAttributeLocation('position')]
+		const attributeLocations: GLint[] = [this._shader!.getAttributeLocation('position')]
 		const attributeStrides: number[] = [3]
 		const vertices = [
 			// x, y, z
