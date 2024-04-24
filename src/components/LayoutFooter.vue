@@ -7,8 +7,6 @@ import IconTwitter from './icons/TwitterIcon.vue'
 
 <template>
   <footer>
-    <!-- <div class="container footer__topWrapper">
-    </div> -->
     <div class="container footer__bottomWrapper">
       <span class="footer__copyright">© {{ new Date().getFullYear() }} <span class="underline">copy right</span></span>
       <ul class="footer__socials">
@@ -54,3 +52,19 @@ import IconTwitter from './icons/TwitterIcon.vue'
     </div>
   </footer>
 </template>
+
+<style scoped>
+.logo {
+	height: 6em;
+	padding: 1.5em;
+	will-change: filter;
+}
+
+.logo:hover {
+	filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.vue:hover {
+	filter: drop-shadow(0 0 2em #42b883aa);
+}
+</style>

@@ -53,7 +53,9 @@ export default class Engine {
 		GLUtilities.gl.clearColor(0, 0, 0, 0)
 		GLUtilities.gl.clearDepth(1.0)
 		GLUtilities.gl.clearStencil(0)
-		GLUtilities.gl.clear(GLUtilities.gl.COLOR_BUFFER_BIT | GLUtilities.gl.DEPTH_BUFFER_BIT | GLUtilities.gl.STENCIL_BUFFER_BIT) // canvas初期化
+		GLUtilities.gl.clear(
+			GLUtilities.gl.COLOR_BUFFER_BIT | GLUtilities.gl.DEPTH_BUFFER_BIT | GLUtilities.gl.STENCIL_BUFFER_BIT,
+		) // canvas初期化
 
 		if (this._shader) {
 			this._shader.use() // always use the target shader before taking the uniform locations
@@ -75,21 +77,19 @@ export default class Engine {
 			this._indexBuffer.draw()
 		}
 		requestAnimationFrame(this.loop.bind(this))
-
 	}
 
 	private createVertexBuffer() {
 		this._vertexBuffer = new GLBuffer(3, GLUtilities.gl.FLOAT, GLUtilities.gl.ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
 
-		const attributeLocations: GLint[] = [this._shader!.getAttributeLocation('position')]
+		const attributeLocations: GLint[] = [this._shader.getAttributeLocation('position')]
 		const attributeStrides: number[] = [3]
 		const vertices = [
 			// x, y, z
-			-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0
+			-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0,
 		]
 		let currentOffset = 0
 		for (let i = 0; i < attributeLocations.length; ++i) {
-
 			const attributeInfo = new AttrInfo()
 			attributeInfo.location = attributeLocations[i]
 			attributeInfo.offset = currentOffset
@@ -103,7 +103,12 @@ export default class Engine {
 		this._vertexBuffer.unbind()
 	}
 	private createIndexBuffer() {
-		this._indexBuffer = new GLBuffer(1, GLUtilities.gl.UNSIGNED_SHORT, GLUtilities.gl.ELEMENT_ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
+		this._indexBuffer = new GLBuffer(
+			1,
+			GLUtilities.gl.UNSIGNED_SHORT,
+			GLUtilities.gl.ELEMENT_ARRAY_BUFFER,
+			GLUtilities.gl.TRIANGLES,
+		)
 		const indices = [0, 2, 1, 1, 2, 3]
 		this._indexBuffer.pushBackData(indices)
 		this._indexBuffer.upload()

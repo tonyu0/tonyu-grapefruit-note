@@ -1,4 +1,3 @@
-import HomeVue from '@/views/HomePage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -7,7 +6,7 @@ const router = createRouter({
 		{
 			path: '/',
 			name: 'Home',
-			component: HomeVue,
+			component: () => import('@/views/HomePage.vue'),
 		},
 		{
 			path: '/articles/:id',
@@ -23,7 +22,12 @@ const router = createRouter({
 			path: '/webgl',
 			name: 'WebGL',
 			component: () => import('@/views/WebGL.vue'),
-		}
+		},
+		{
+			path: '/about',
+			name: 'About',
+			component: () => import('@/views/AboutThisSite.vue'),
+		},
 	],
 })
 

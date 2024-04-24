@@ -5,14 +5,12 @@ import { RouterLink } from 'vue-router'
 <template>
   <main class="error">
     <section>
-      <div class="container">
-        <h1>page not found</h1>
-        <p>
-          <RouterLink to="/">
-            Back to Top
-          </RouterLink>
-        </p>
-      </div>
+      <h1>page not found</h1>
+      <p>
+        <RouterLink to="/">
+          Back to Top
+        </RouterLink>
+      </p>
     </section>
   </main>
 </template>

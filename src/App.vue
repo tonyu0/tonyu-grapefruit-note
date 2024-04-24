@@ -1,35 +1,48 @@
 <script setup lang="ts">
 // https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { RouterView } from 'vue-router'
-import Notice from '@/components/LayoutNotice.vue'
 import Header from '@/components/LayoutHeader.vue'
 import Footer from '@/components/LayoutFooter.vue'
+import Sidebar from '@/components/LayoutSidebar.vue'
+
+// page definition
+const topTitle = 'tonyu lab'
+const pages = [
+	{ id: 0, name: 'Home', to: '/' },
+	{ id: 1, name: 'WebGL', to: '/webgl' },
+	{ id: 2, name: 'About', to: '/about' },
+]
 </script>
 
 <template>
   <div class="layout">
-    <router-link class="flex text-4xl text-yellow-700" to="/">
-      tonyu lab
+    <router-link
+      class="m-10"
+      to="/"
+    >
+      <h1>
+        {{ topTitle }}
+      </h1>
     </router-link>
-    <Notice />
-    <Header />
-    <RouterView :key="$route.fullPath" />
+    <Header :pages="pages" />
+    <div class="wrapper my-10 px-40">
+      <div class="content float-left">
+        <RouterView :key="$route.fullPath" />
+      </div>
+      <div class="sidebar float-right">
+        <Sidebar />
+      </div>
+    </div>
     <Footer />
   </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+.content {
+	width: 75%;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.sidebar {
+	width: 25%;
 }
 </style>

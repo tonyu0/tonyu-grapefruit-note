@@ -1,8 +1,8 @@
 <template>
   <section class="info">
     <div class="info__background">
-      <div class="info__backgroundLeft"></div>
-      <div class="info__backgroundRight"></div>
+      <div class="info__backgroundLeft" />
+      <div class="info__backgroundRight" />
     </div>
     <div class="container">
       <div class="info__wrapperOuter left">
@@ -14,7 +14,11 @@
       <div class="info__wrapperOuter right">
         <div class="info_wrapperInner">
           <span class="info__subtitle">Codebase</span>
-          <a target="_blank" rel="noreferrer" class="info__title">View on GitHub</a>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            class="info__title"
+          >View on GitHub</a>
         </div>
       </div>
     </div>

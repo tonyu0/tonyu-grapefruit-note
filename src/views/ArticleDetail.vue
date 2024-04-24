@@ -14,33 +14,36 @@ const article = ref(null)
 const moreArticles = ref(null)
 fetchData()
 async function fetchData() {
-  const { id } = route.params
-  try {
-    const entries = await Contentful
-      .getEntries({
-        content_type: "blog",
-        'fields.slug': id,
-      })
-      .catch((error) => console.log(error))
-    article.value = entries.items[0]
-  } catch (err) {
-    console.log(err)
-    router.replace({ name: 'not-found', params: { catchAll: route.path } })
-  }
+	const { id } = route.params
+	try {
+		const entries = await Contentful.getEntries({
+			content_type: 'blog',
+			'fields.slug': id,
+		}).catch((error) => console.log(error))
+		article.value = entries.items[0]
+	} catch (err) {
+		console.log(err)
+		router.replace({ name: 'not-found', params: { catchAll: route.path } })
+	}
 }
-const getPostHtml = (str) => { return documentToHtmlString(str) }
+const getPostHtml = (str) => {
+	return documentToHtmlString(str)
+}
 const getDate = (date) => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  return year.toString() + '/' + month.toString() + '/' + day.toString()
+	const year = date.getFullYear()
+	const month = date.getMonth() + 1
+	const day = date.getDate()
+	return year.toString() + '/' + month.toString() + '/' + day.toString()
 }
 </script>
 <template>
   <div class="current-article">
     <section v-if="article">
       <div class="container">
-        <RouterLink to="/" class="current-article__backlink">
+        <RouterLink
+          to="/"
+          class="current-article__backlink"
+        >
           <IconBack class="icon" />
           <span>Back to Articles</span>
         </RouterLink>
@@ -72,16 +75,27 @@ const getDate = (date) => {
             </div>
           </div>
           <div class="current-article_coverImage">
-            <img :src="article.fields.image.fields.file.url" alt="">
+            <img
+              :src="article.fields.image.fields.file.url"
+              alt=""
+            >
           </div>
         </div>
         <div class="current-article__body">
-          <div class="current-article__bodyContent" v-html="getPostHtml(article.fields.body)"></div>
+          <div
+            class="current-article__bodyContent"
+            v-html="getPostHtml(article.fields.body)"
+          />
         </div>
       </div>
     </section>
-    <section v-else>記事が見つかりません</section>
+    <section v-else>
+      記事が見つかりません
+    </section>
 
-    <MoreArticles v-if="moreArticles" :articles="moreArticles" />
+    <MoreArticles
+      v-if="moreArticles"
+      :articles="moreArticles"
+    />
   </div>
 </template>

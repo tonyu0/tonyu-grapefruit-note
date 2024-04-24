@@ -2,24 +2,34 @@
 import { RouterLink } from 'vue-router'
 
 defineProps({
-  article: {
-    type: Object,
-    required: true,
-  },
-  bordered: {
-    type: Boolean,
-    required: true,
-  },
+	article: {
+		type: Object,
+		required: true,
+	},
+	bordered: {
+		type: Boolean,
+		required: true,
+	},
 })
 </script>
 
 <template>
-  <article class="article" :class="{ bordered }">
+  <article
+    class="article"
+    :class="{ bordered }"
+  >
     <div class="article__topWrapper">
       <div class="article__imageWrapper">
-        <img :src="article.fields.image.fields.file.url" alt="" loading="lazy">
+        <img
+          :src="article.fields.image.fields.file.url"
+          alt=""
+          loading="lazy"
+        >
       </div>
-      <span aria-hidden="true" class="tag">{{ article.metadata.tags.join('/') }}</span>
+      <span
+        aria-hidden="true"
+        class="tag"
+      >{{ article.metadata.tags.join('/') }}</span>
     </div>
     <div class="article__bottomWrapper">
       <h1 class="article__title">
