@@ -3,7 +3,7 @@
 import { RouterView } from 'vue-router'
 import Header from '@/components/LayoutHeader.vue'
 import Footer from '@/components/LayoutFooter.vue'
-import Sidebar from '@/components/LayoutSidebar.vue'
+// import Sidebar from '@/components/LayoutSidebar.vue'
 
 // page definition
 const topTitle = 'tonyu lab'
@@ -25,14 +25,10 @@ const pages = [
       </h1>
     </router-link>
     <Header :pages="pages" />
-    <div class="wrapper my-10 px-40">
-      <div class="content float-left">
-        <RouterView :key="$route.fullPath" />
-      </div>
-      <div class="sidebar float-right">
+    <RouterView :key="$route.fullPath" />
+    <!-- <div class="sidebar float-right">
         <Sidebar />
-      </div>
-    </div>
+      </div> -->
     <Footer />
   </div>
 </template>

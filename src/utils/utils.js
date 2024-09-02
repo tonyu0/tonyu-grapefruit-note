@@ -23,3 +23,10 @@ export function formatRelativeTime(fromDate, toDate) {
 
 	return fromDate.toLocaleDateString(LOCALE)
 }
+
+export function formatDate(date, delim = '.') {
+	const year = date.getFullYear()
+	const month = date.getMonth() + 1
+	const day = date.getDate()
+	return year.toString() + delim + month.toString() + delim + day.toString()
+}

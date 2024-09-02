@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { formatRelativeTime } from '@/utils/format-relative-time'
+import { formatDate } from '@/utils/utils'
 import IconBack from '@/components/icons/BackIcon.vue'
 import MoreArticles from '@/components/MoreArticles.vue'
 // Contentful
@@ -29,12 +29,6 @@ async function fetchData() {
 const getPostHtml = (str) => {
 	return documentToHtmlString(str)
 }
-const getDate = (date) => {
-	const year = date.getFullYear()
-	const month = date.getMonth() + 1
-	const day = date.getDate()
-	return year.toString() + '/' + month.toString() + '/' + day.toString()
-}
 </script>
 <template>
   <div class="current-article">
@@ -45,41 +39,59 @@ const getDate = (date) => {
           class="current-article__backlink"
         >
           <IconBack class="icon" />
-          <span>Back to Articles</span>
+          <span>Back</span>
         </RouterLink>
         <h1 class="current-article__title">
           {{ article.fields.title }}
         </h1>
         <div class="current-article__detail">
           <div class="current-article__wrapperOuter">
-            <div class="current-article__wrapperInner">
-              <!-- <div class="current-article__authorImage">
+            <!-- <div class="current-article__authorImage">
                 <img
                   :src="getAssetURL(article.author.avatar)"
                   alt=""
                   loading="lazy"
                 />
               </div> -->
-              <div>
-                <!-- <div class="current-article__authorName">
+            <!-- <div class="current-article__authorName">
                   {{
                     `${article.author.first_name} ${article.author.last_name}`
                   }}
                 </div> -->
-                <div class="current-article__time">
-                  作成日時:
-                  <time>{{ getDate(new Date(article.sys.createdAt)) }}</time> | 更新日時:
-                  <time>{{ getDate(new Date(article.sys.updatedAt)) }}</time>
-                </div>
-              </div>
+            <div class="current-article__time">
+              <span class="article-date">
+                <font-awesome-icon
+                  :icon="['fa', 'fa-history']"
+                  aria-hidden="true"
+                />
+                <time>{{ formatDate(new Date(article.sys.createdAt)) }}</time>
+              </span>
+              <span class="article-date">
+                <font-awesome-icon
+                  :icon="['far', 'fa-clock']"
+                  aria-hidden="true"
+                />
+                <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
+              </span>
+
+              <span
+                v-for="tag in article.metadata.tags"
+                :key="tag.sys.id"
+                class="tag"
+              >
+                <font-awesome-icon
+                  :icon="['fa', 'fa-tag']"
+                  aria-hidden="true"
+                />
+                {{ tag.sys.id }}</span>
             </div>
           </div>
-          <div class="current-article_coverImage">
+          <!-- <div class="current-article_coverImage">
             <img
               :src="article.fields.image.fields.file.url"
               alt=""
             >
-          </div>
+          </div> -->
         </div>
         <div class="current-article__body">
           <div
