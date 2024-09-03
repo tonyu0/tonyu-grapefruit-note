@@ -12,102 +12,108 @@ const router = useRouter()
 const route = useRoute()
 const article = ref(null)
 const moreArticles = ref(null)
+
 fetchData()
 async function fetchData() {
 	const { id } = route.params
 	try {
-		const entries = await Contentful.getEntries({
+
+		await Contentful.getEntries({
 			content_type: 'blog',
 			'fields.slug': id,
-		}).catch((error) => console.log(error))
-		article.value = entries.items[0]
+		}).then((entries) => article.value = entries.items[0])
+
+    if (article.value === undefined) {
+      throw "not-found"
+    }
 	} catch (err) {
-		console.log(err)
-		router.replace({ name: 'not-found', params: { catchAll: route.path } })
+    console.log(err)
+		router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
 	}
 }
-const getPostHtml = (str) => {
-	return documentToHtmlString(str)
-}
+
 </script>
 <template>
   <div class="current-article">
-    <section v-if="article">
-      <div class="container">
-        <RouterLink
-          to="/"
-          class="current-article__backlink"
-        >
-          <IconBack class="icon" />
-          <span>Back</span>
-        </RouterLink>
-        <h1 class="current-article__title">
-          {{ article.fields.title }}
-        </h1>
-        <div class="current-article__detail">
-          <div class="current-article__wrapperOuter">
-            <!-- <div class="current-article__authorImage">
+    <article
+      v-if="article"
+      class="container"
+    >
+      <RouterLink
+        to="/"
+        class="current-article__backlink"
+      >
+        <IconBack class="icon" />
+        <span>Back</span>
+      </RouterLink>
+      <h1 class="current-article__title">
+        {{ article.fields.title }}
+      </h1>
+      <div class="current-article__detail">
+        <div class="current-article__wrapperOuter">
+          <!-- <div class="current-article__authorImage">
                 <img
                   :src="getAssetURL(article.author.avatar)"
                   alt=""
                   loading="lazy"
                 />
               </div> -->
-            <!-- <div class="current-article__authorName">
+          <!-- <div class="current-article__authorName">
                   {{
                     `${article.author.first_name} ${article.author.last_name}`
                   }}
                 </div> -->
-            <div class="current-article__time">
-              <span class="article-date">
-                <font-awesome-icon
-                  :icon="['fa', 'fa-history']"
-                  aria-hidden="true"
-                />
-                <time>{{ formatDate(new Date(article.sys.createdAt)) }}</time>
-              </span>
-              <span class="article-date">
-                <font-awesome-icon
-                  :icon="['far', 'fa-clock']"
-                  aria-hidden="true"
-                />
-                <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
-              </span>
+          <div class="current-article__time">
+            <span class="article-date">
+              <font-awesome-icon
+                :icon="['fa', 'fa-history']"
+                aria-hidden="true"
+              />
+              <time>{{ formatDate(new Date(article.sys.createdAt)) }}</time>
+            </span>
+            <span class="article-date">
+              <font-awesome-icon
+                :icon="['far', 'fa-clock']"
+                aria-hidden="true"
+              />
+              <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
+            </span>
 
-              <span
-                v-for="tag in article.metadata.tags"
-                :key="tag.sys.id"
-                class="tag"
-              >
-                <font-awesome-icon
-                  :icon="['fa', 'fa-tag']"
-                  aria-hidden="true"
-                />
-                {{ tag.sys.id }}</span>
-            </div>
+            <span
+              v-for="tag in article.metadata.tags"
+              :key="tag.sys.id"
+              class="tag"
+            >
+              <font-awesome-icon
+                :icon="['fa', 'fa-tag']"
+                aria-hidden="true"
+              />
+              {{ tag.sys.id }}</span>
           </div>
-          <!-- <div class="current-article_coverImage">
+        </div>
+        <!-- <div class="current-article_coverImage">
             <img
               :src="article.fields.image.fields.file.url"
               alt=""
             >
           </div> -->
-        </div>
-        <div class="current-article__body">
-          <div
-            class="current-article__bodyContent"
-            v-html="getPostHtml(article.fields.body)"
-          />
-        </div>
       </div>
-    </section>
-    <section v-else>
-      記事が見つかりません
-    </section>
-
-    <MoreArticles
-      v-if="moreArticles"
-      :articles="moreArticles"
-    />
+      <!-- eslint-disable vue/no-v-html -->
+      <div
+        class="current-article__body"
+        v-html="documentToHtmlString(article.fields.body)"
+      />
+      <!-- eslint-enable -->
+      
+      <hr>
+      <h1 class="current-article__title">
+        関連記事
+      </h1>
+      <!-- TODO: タグで絞って共通する記事を取得して並べる。並べるのはTopと同じようにできそう -->
+      <MoreArticles
+        v-if="moreArticles"
+        :articles="moreArticles"
+      />
+    </article>
   </div>
 </template>

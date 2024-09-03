@@ -1,16 +1,23 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import IconBack from '@/components/icons/BackIcon.vue'
 </script>
 
 <template>
-  <main class="error">
-    <section>
-      <h1>page not found</h1>
-      <p>
-        <RouterLink to="/">
+  <div class="current-article">
+    <article
+      class="container"
+    >
+      <RouterLink
+        to="/"
+        class="current-article__backlink"
+      >
+        <IconBack class="icon" />
+        <span>
           Back to Top
-        </RouterLink>
-      </p>
-    </section>
-  </main>
+        </span>
+      </RouterLink>
+      <h1>Page Not Found</h1>
+    </article>
+  </div>
 </template>

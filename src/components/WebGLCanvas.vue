@@ -14,6 +14,7 @@
 
 <script lang="ts" setup>
 import { onMounted, watch, ref } from 'vue'
+import {onBeforeRouteLeave} from 'vue-router'
 import Engine from '@/lib/engine'
 interface CanvasProps {
 	vertexShaderSource?: string
@@ -30,6 +31,12 @@ let engine: Engine
 onMounted(() => {
 	engine = new Engine()
 	engine.loop()
+})
+
+// stop drawing loop before leaving this page
+onBeforeRouteLeave((to, from, next) => {
+	engine.stopLoop()
+	next()
 })
 
 watch(props, () => {

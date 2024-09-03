@@ -10,7 +10,7 @@ const topTitle = 'tonyu lab'
 const pages = [
 	{ id: 0, name: 'Home', to: '/' },
 	{ id: 1, name: 'WebGL', to: '/webgl' },
-	{ id: 2, name: 'About', to: '/about' },
+	{ id: 2, name: 'About', to: '/articles/about' },
 ]
 </script>
 
@@ -25,7 +25,10 @@ const pages = [
       </h1>
     </router-link>
     <Header :pages="pages" />
-    <RouterView :key="$route.fullPath" />
+
+    <main class="main-content">
+      <RouterView :key="$route.fullPath" />
+    </main>
     <!-- <div class="sidebar float-right">
         <Sidebar />
       </div> -->

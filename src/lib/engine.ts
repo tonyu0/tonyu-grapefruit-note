@@ -9,6 +9,7 @@ export default class Engine {
 	private _startTime: number
 	private _mouseX = 0
 	private _mouseY = 0
+	private _isLoopStopped = false
 
 	public constructor() {
 		this._startTime = new Date().getTime()
@@ -76,12 +77,20 @@ export default class Engine {
 			this._indexBuffer.bind()
 			this._indexBuffer.draw()
 		}
-		requestAnimationFrame(this.loop.bind(this))
+
+		if(!this._isLoopStopped) {
+			requestAnimationFrame(this.loop.bind(this))
+		}
+	}
+
+	public stopLoop() {
+		this._isLoopStopped = true
 	}
 
 	private createVertexBuffer() {
 		this._vertexBuffer = new GLBuffer(3, GLUtilities.gl.FLOAT, GLUtilities.gl.ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
 
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const attributeLocations: GLint[] = [this._shader!.getAttributeLocation('position')]
 		const attributeStrides: number[] = [3]
 		const vertices = [
@@ -117,7 +126,6 @@ export default class Engine {
 
 	public loadShaders(vertexShaderSource: string, fragmentShaderSource: string): void {
 		this._shader = new GLShader('basic', vertexShaderSource, fragmentShaderSource)
-		this._shader.use()
 		this.createVertexBuffer()
 		this.createIndexBuffer()
 	}

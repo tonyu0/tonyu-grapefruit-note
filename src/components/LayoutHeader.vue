@@ -11,16 +11,17 @@ defineProps({
 
 <template>
   <header class="notice">
-    <nav class="container">
+    <nav>
       <template
         v-for="page in pages"
         :key="page.id"
       >
-        <router-link :to="page.to">
+        <router-link
+          :to="page.to"
+        >
           {{ page.name }}
         </router-link>
       </template>
-      <span class="header__description" />
     </nav>
     <!-- <i class="material-icons-outlined">close</i> -->
   </header>

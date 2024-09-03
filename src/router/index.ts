@@ -23,12 +23,11 @@ const router = createRouter({
 			name: 'WebGL',
 			component: () => import('@/views/WebGL.vue'),
 		},
-		{
-			path: '/about',
-			name: 'About',
-			component: () => import('@/views/AboutThisSite.vue'),
-		},
 	],
+	scrollBehavior() {
+		// always scroll to top
+		return { top: 0 }
+	}
 })
 
 export default router

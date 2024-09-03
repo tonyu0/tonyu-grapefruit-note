@@ -70,6 +70,7 @@ export function createFramebuffer(width: number, height: number) {
 // **二次元のテクスチャをフレームバッファにアタッチする場合には、この関数内部でテクスチャのアタッチまで行なっていました。
 // **しかしフレームバッファにキューブマップテクスチャをアタッチする場合には、実際にレンダリングが行なわれる段階でアタッチを行ないます。
 // フレームバッファをオブジェクトとして生成する関数(キューブマップ仕様)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function createCubeFramebuffer(width: number, height: number, target: number[]) {
 	// フレームバッファの生成
 	const frameBuffer = GLUtilities.gl.createFramebuffer()
