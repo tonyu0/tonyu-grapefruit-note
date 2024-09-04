@@ -1,29 +1,19 @@
 <script setup>
 import { ref } from 'vue'
 import ArticleItem from '@/components/ArticleItem.vue'
-import { Contentful } from '@/services/contentful'
+import { fetchAllArticles } from '@/utils/utils';
 const articles = ref(null)
-fetchData()
-async function fetchData() {
-	Contentful.getEntries({
-		content_type: 'blog',
-		order: '-sys.createdAt',
-		limit: 10,
-	})
-		.then((entries) => {
-			console.log(entries)
-			articles.value = entries.items
-		})
-		.catch(console.error)
+
+const setup = async () => {
+  articles.value = await fetchAllArticles(10, true)
 }
+setup()
+
 </script>
 
 <template>
   <div class="container">
-    <div
-      v-if="articles"
-      class="articles-grid"
-    >
+    <div v-if="articles" class="articles-grid">
       <article-item
         v-for="(article, index) in articles"
         :key="index"

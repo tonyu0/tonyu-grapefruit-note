@@ -66,6 +66,7 @@ body {
 
 a {
   transition: all 0.3s;
+
   &:hover {
     opacity: 0.5;
   }
@@ -79,9 +80,10 @@ a {
   font-weight: 500;
 }
 
-.article-date  { /* 作成・更新日時の位置微調整用 */
-    margin-right: 8px;
-    float: left;
+.article-date {
+  /* 作成・更新日時の位置微調整用 */
+  margin-right: 8px;
+  float: left;
 }
 
 .main-content {
@@ -118,12 +120,13 @@ header {
   background-color: var(--foreground-inverted);
 }
 
-header nav { 
+header nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 10vw;
-  width: calc(100vw - 15px); /* for not depending on whether scroll bar exists */
+  width: calc(100vw - 15px);
+  /* for not depending on whether scroll bar exists */
 }
 
 header nav a {
@@ -732,7 +735,8 @@ footer {
 
 @media (min-width: 640px) {
   .current-article__wrapperOuter {
-    flex-direction: column; /*should be row?*/
+    flex-direction: column;
+    /*should be row?*/
     justify-content: space-between;
     margin-bottom: 40px;
   }
@@ -759,7 +763,8 @@ footer {
 }
 
 .current-article .tag {
-  float: right; /* 色々いじってタグの位置試行錯誤中 */
+  float: right;
+  /* 色々いじってタグの位置試行錯誤中 */
   margin-right: 8px
 }
 

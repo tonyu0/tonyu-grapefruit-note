@@ -3,46 +3,37 @@ import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { formatDate } from '@/utils/utils'
 import IconBack from '@/components/icons/BackIcon.vue'
+import { fetchArticles } from '@/utils/utils';
 import MoreArticles from '@/components/MoreArticles.vue'
 // Contentful
-import { Contentful } from '@/services/contentful'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
 const router = useRouter()
 const route = useRoute()
 const article = ref(null)
 const moreArticles = ref(null)
+const { id } = route.params
+const categories = ['blog', 'blog2'] // TODO : improve the way searching
 
-fetchData()
-async function fetchData() {
-	const { id } = route.params
-	try {
-
-		await Contentful.getEntries({
-			content_type: 'blog',
-			'fields.slug': id,
-		}).then((entries) => article.value = entries.items[0])
-
-    if (article.value === undefined) {
-      throw "not-found"
+const setup = async () => {
+  for (const category of categories) {
+    const res = await fetchArticles(id, category, 1, false)
+    if (res.length > 0) {
+      article.value = res[0]
+      break
     }
-	} catch (err) {
-    console.log(err)
-		router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
-	}
+  }
+}
+setup()
+if (article.value === undefined) {
+  router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
 }
 
 </script>
 <template>
   <div class="current-article">
-    <article
-      v-if="article"
-      class="container"
-    >
-      <RouterLink
-        to="/"
-        class="current-article__backlink"
-      >
+    <article v-if="article" class="container">
+      <RouterLink to="/" class="current-article__backlink">
         <IconBack class="icon" />
         <span>Back</span>
       </RouterLink>
@@ -65,29 +56,22 @@ async function fetchData() {
                 </div> -->
           <div class="current-article__time">
             <span class="article-date">
-              <font-awesome-icon
-                :icon="['fa', 'fa-history']"
-                aria-hidden="true"
-              />
+              <font-awesome-icon :icon="['fa', 'fa-history']" aria-hidden="true" />
               <time>{{ formatDate(new Date(article.sys.createdAt)) }}</time>
             </span>
             <span class="article-date">
-              <font-awesome-icon
-                :icon="['far', 'fa-clock']"
-                aria-hidden="true"
-              />
+              <font-awesome-icon :icon="['far', 'fa-clock']" aria-hidden="true" />
               <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
             </span>
 
-            <span
-              v-for="tag in article.metadata.tags"
-              :key="tag.sys.id"
-              class="tag"
-            >
-              <font-awesome-icon
-                :icon="['fa', 'fa-tag']"
-                aria-hidden="true"
-              />
+
+            <span class="tag">
+              <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
+              {{ article.sys.contentType.sys.id }}
+            </span>
+
+            <span v-for="tag in article.metadata.tags" :key="tag.sys.id" class="tag">
+              <font-awesome-icon :icon="['fa', 'fa-tag']" aria-hidden="true" />
               {{ tag.sys.id }}</span>
           </div>
         </div>
@@ -99,21 +83,15 @@ async function fetchData() {
           </div> -->
       </div>
       <!-- eslint-disable vue/no-v-html -->
-      <div
-        class="current-article__body"
-        v-html="documentToHtmlString(article.fields.body)"
-      />
+      <div class="current-article__body" v-html="documentToHtmlString(article.fields.body)" />
       <!-- eslint-enable -->
-      
+
       <hr>
       <h1 class="current-article__title">
         関連記事
       </h1>
       <!-- TODO: タグで絞って共通する記事を取得して並べる。並べるのはTopと同じようにできそう -->
-      <MoreArticles
-        v-if="moreArticles"
-        :articles="moreArticles"
-      />
+      <MoreArticles v-if="moreArticles" :articles="moreArticles" />
     </article>
   </div>
 </template>

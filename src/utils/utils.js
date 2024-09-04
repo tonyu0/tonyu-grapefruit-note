@@ -1,3 +1,4 @@
+import { Contentful } from '@/services/contentful'
 
 const UNITS = {
 	year: 24 * 60 * 60 * 1000 * 365,
@@ -29,4 +30,23 @@ export function formatDate(date, delim = '.') {
 	const month = date.getMonth() + 1
 	const day = date.getDate()
 	return year.toString() + delim + month.toString() + delim + day.toString()
+}
+
+export async function fetchArticles(id, category, limit, sortByCreatedAt) {
+	return Contentful.getEntries({
+		'fields.slug': id,
+		'content_type': category,
+		'limit': limit,
+		'order': (sortByCreatedAt ? '-sys.createdAt' : undefined)
+	})
+		.then((entries) => {
+			console.log(entries)
+			return entries.items
+		})
+		.catch(console.error)
+
+}
+
+export async function fetchAllArticles(limit, sortByCreatedAt) {
+	return fetchArticles(undefined, undefined, limit, sortByCreatedAt)
 }

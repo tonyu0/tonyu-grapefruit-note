@@ -10,4 +10,8 @@ parserOptions:
 plugins:
  - vue
  - '@typescript-eslint'
-rules: {}
+rules:
+  vue/max-attributes-per-line: # https://github.com/prettier/eslint-plugin-prettier/issues/94
+    - error
+    - singleline: 5
+      multiline: 1
