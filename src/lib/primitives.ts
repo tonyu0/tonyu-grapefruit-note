@@ -21,17 +21,26 @@ export function hsva(h: number, s: number, v: number, a: number): number[] {
 	return color
 }
 
-export function pera() {
-	const position = [-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0]
-	const normal = [-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0]
-	const color = [1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-	const textureCoord = [0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.75, 1.75]
-	const index = [0, 1, 2, 3, 2, 1]
-
-	return { p: position, n: normal, c: color, t: textureCoord, i: index }
+interface Primitive {
+	vertices: number[]
+	indices: number[]
+	normals: number[]
+	colors: number[]
+	texCoords: number[]
 }
 
-export function torus(row: number, column: number, irad: number, orad: number, color: number[]) {
+// canvas for fragment shader
+export function canvasPlane(): Primitive {
+	return {
+		vertices: [-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0],
+		indices: [0, 1, 2, 3, 2, 1],
+		normals: [-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0],
+		colors: [1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+		texCoords: [0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.75, 1.75],
+	}
+}
+
+export function torus(row: number, column: number, irad: number, orad: number, color: number[]): Primitive {
 	const pos = [],
 		nor = [],
 		col = [],
@@ -68,10 +77,16 @@ export function torus(row: number, column: number, irad: number, orad: number, c
 			idx.push(r + column + 1, r + column + 2, r + 1)
 		}
 	}
-	return { p: pos, n: nor, c: col, t: st, i: idx }
+	return {
+		vertices: pos,
+		indices: idx,
+		normals: nor,
+		colors: col,
+		texCoords: st,
+	}
 }
 
-export function sphere(row: number, column: number, rad: number, color: number[]) {
+export function sphere(row: number, column: number, rad: number, color: number[]): Primitive {
 	const pos = [],
 		nor = [],
 		col = [],
@@ -102,10 +117,16 @@ export function sphere(row: number, column: number, rad: number, color: number[]
 			idx.push(r, r + column + 2, r + column + 1)
 		}
 	}
-	return { p: pos, n: nor, c: col, t: st, i: idx }
+	return {
+		vertices: pos,
+		indices: idx,
+		normals: nor,
+		colors: col,
+		texCoords: st,
+	}
 }
 
-export function cube(side: number, color: number[]) {
+export function cube(side: number, color: number[]): Primitive {
 	// TODO: prepare color type
 	const hs = side * 0.5
 	const pos = [
@@ -202,5 +223,11 @@ export function cube(side: number, color: number[]) {
 		0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12, 13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22,
 		20, 22, 23,
 	]
-	return { p: pos, n: nor, c: col, t: st, i: idx }
+	return {
+		vertices: pos,
+		indices: idx,
+		normals: nor,
+		colors: col,
+		texCoords: st,
+	}
 }

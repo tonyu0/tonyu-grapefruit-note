@@ -1,6 +1,8 @@
 ﻿import { GLUtilities } from '@/lib/gl/gl'
 import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
+import { canvasPlane } from '@/lib/primitives'
+
 export default class Engine {
 	private _canvas: HTMLCanvasElement
 	private _shader: GLShader | undefined
@@ -78,7 +80,7 @@ export default class Engine {
 			this._indexBuffer.draw()
 		}
 
-		if(!this._isLoopStopped) {
+		if (!this._isLoopStopped) {
 			requestAnimationFrame(this.loop.bind(this))
 		}
 	}
@@ -87,16 +89,12 @@ export default class Engine {
 		this._isLoopStopped = true
 	}
 
-	private createVertexBuffer() {
+	private createVertexBuffer(vertices: number[]) {
 		this._vertexBuffer = new GLBuffer(3, GLUtilities.gl.FLOAT, GLUtilities.gl.ARRAY_BUFFER, GLUtilities.gl.TRIANGLES)
 
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const attributeLocations: GLint[] = [this._shader!.getAttributeLocation('position')]
 		const attributeStrides: number[] = [3]
-		const vertices = [
-			// x, y, z
-			-1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0,
-		]
 		let currentOffset = 0
 		for (let i = 0; i < attributeLocations.length; ++i) {
 			const attributeInfo = new AttrInfo()
@@ -111,14 +109,13 @@ export default class Engine {
 		this._vertexBuffer.upload()
 		this._vertexBuffer.unbind()
 	}
-	private createIndexBuffer() {
+	private createIndexBuffer(indices: number[]) {
 		this._indexBuffer = new GLBuffer(
 			1,
 			GLUtilities.gl.UNSIGNED_SHORT,
 			GLUtilities.gl.ELEMENT_ARRAY_BUFFER,
 			GLUtilities.gl.TRIANGLES,
 		)
-		const indices = [0, 2, 1, 1, 2, 3]
 		this._indexBuffer.pushBackData(indices)
 		this._indexBuffer.upload()
 		this._indexBuffer.unbind()
@@ -126,7 +123,10 @@ export default class Engine {
 
 	public loadShaders(vertexShaderSource: string, fragmentShaderSource: string): void {
 		this._shader = new GLShader('basic', vertexShaderSource, fragmentShaderSource)
-		this.createVertexBuffer()
-		this.createIndexBuffer()
+
+		// TODO : it is wired, every time this load shader, update vertices and indices, so make them more independent
+		const primitive = canvasPlane()
+		this.createVertexBuffer(primitive.vertices)
+		this.createIndexBuffer(primitive.indices)
 	}
 }

@@ -14,10 +14,7 @@ defineProps({
       <h1 class="more-articles__title">
         More Articles
       </h1>
-      <div
-        v-if="articles.length !== 0"
-        class="articles-grid"
-      >
+      <div v-if="articles.length !== 0" class="articles-grid">
         <article-item
           v-for="(article, index) in articles"
           :key="index"

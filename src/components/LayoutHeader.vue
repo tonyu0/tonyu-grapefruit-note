@@ -12,13 +12,8 @@ defineProps({
 <template>
   <header class="notice">
     <nav>
-      <template
-        v-for="page in pages"
-        :key="page.id"
-      >
-        <router-link
-          :to="page.to"
-        >
+      <template v-for="page in pages" :key="page.id">
+        <router-link :to="page.to">
           {{ page.name }}
         </router-link>
       </template>

@@ -15,11 +15,7 @@
       <div class="info__wrapperOuter right">
         <div class="info_wrapperInner">
           <span class="info__subtitle">Codebase</span>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            class="info__title"
-          >View on GitHub</a>
+          <a target="_blank" rel="noreferrer" class="info__title">View on GitHub</a>
         </div>
       </div>
     </div>

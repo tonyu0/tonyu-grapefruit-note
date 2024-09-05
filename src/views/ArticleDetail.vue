@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { formatDate } from '@/utils/utils'
 import IconBack from '@/components/icons/BackIcon.vue'
-import { fetchArticles } from '@/utils/utils';
+import { fetchArticles } from '@/utils/utils'
 import MoreArticles from '@/components/MoreArticles.vue'
 // Contentful
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
@@ -16,19 +16,18 @@ const { id } = route.params
 const categories = ['blog', 'blog2'] // TODO : improve the way searching
 
 const setup = async () => {
-  for (const category of categories) {
-    const res = await fetchArticles(id, category, 1, false)
-    if (res.length > 0) {
-      article.value = res[0]
-      break
-    }
-  }
+	for (const category of categories) {
+		const res = await fetchArticles(id, category, 1, false)
+		if (res.length > 0) {
+			article.value = res[0]
+			break
+		}
+	}
 }
 setup()
 if (article.value === undefined) {
-  router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
+	router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
 }
-
 </script>
 <template>
   <div class="current-article">
@@ -63,7 +62,6 @@ if (article.value === undefined) {
               <font-awesome-icon :icon="['far', 'fa-clock']" aria-hidden="true" />
               <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
             </span>
-
 
             <span class="tag">
               <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />

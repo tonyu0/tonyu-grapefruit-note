@@ -1,34 +1,18 @@
 <template>
-  <div
-    id="main"
-    class="mb-6"
-  >
-    <aside id="index">
-      <section>
-        <h1>Shader Menu</h1>
-        <select v-model="fragmentShaderSource">
-          <option
-            disabled
-            value=""
-          >
-            Select one
-          </option>
-          <option
-            v-for="fs in fragmentShaderList"
-            :key="fs.name"
-            :value="fs.source"
-          >
-            {{ fs.name }}
-          </option>
-        </select>
-      </section>
+  <div id="webgl-content">
+    <aside>
+      <h1>Shader Menu</h1>
+      <select v-model="fragmentShaderSource">
+        <option disabled value="">
+          Select one
+        </option>
+        <option v-for="fs in fragmentShaderList" :key="fs.name" :value="fs.source">
+          {{ fs.name }}
+        </option>
+      </select>
     </aside>
-    <WebGLCanvas
-      :vertex-shader-source="vertexShaderSource"
-      :fragment-shader-source="fragmentShaderSource"
-    />
+    <WebGLCanvas :vertex-shader-source="vertexShaderSource" :fragment-shader-source="fragmentShaderSource" />
   </div>
-  <!-- <script type="text/javascript" src="router.js"></script> -->
 </template>
 
 <script setup>
@@ -55,29 +39,22 @@ const fragmentShaderList = [
 </script>
 
 <style scoped>
-canvas {
-	width: 50%;
-	height: 50%;
+#webgl-content {
+	display: flex;
+	justify-content: space-evenly;
 }
 
-#index {
-	width: 200px;
-	float: left;
-	padding: 5px;
-}
-
-#index section > h1 {
-	font-size: 120%;
+#webgl-content h1 {
+	font-size: 0.9rem;
 	font-weight: bold;
 	border-bottom: 1px solid #ccc;
 	margin: 0px 0px;
 }
 
-#content {
-	width: 850px;
-	/* height: 550px; */
-	float: left;
-	border-left: 1px solid #ccc;
-	padding: 20px;
+#webgl-content aside {
+	margin: 0 10px;
+	padding: 0 10px;
+	border: solid 2px var(--background-accent-10);
+	background-color: var(--foreground-inverted);
 }
 </style>

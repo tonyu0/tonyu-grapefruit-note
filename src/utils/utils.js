@@ -33,15 +33,18 @@ export function formatDate(date, delim = '.') {
 }
 
 export async function fetchArticles(id, category, limit, sortByCreatedAt) {
+	// Delivery API functions: https://www.contentful.com/developers/docs/references/content-delivery-api/
+	// TODO : Contentful.getEntriy('entry id') for one article
 	return Contentful.getEntries({
 		'fields.slug': id,
 		'content_type': category,
 		'limit': limit,
-		'order': (sortByCreatedAt ? '-sys.createdAt' : undefined)
+		'order': (sortByCreatedAt ? '-sys.createdAt' : undefined),
+		// 'metadata.tags.sys.id[in]': 'constitution, law'
 	})
-		.then((entries) => {
-			console.log(entries)
-			return entries.items
+		.then((res) => {
+			console.log(res.items)
+			return res.items
 		})
 		.catch(console.error)
 
@@ -49,4 +52,15 @@ export async function fetchArticles(id, category, limit, sortByCreatedAt) {
 
 export async function fetchAllArticles(limit, sortByCreatedAt) {
 	return fetchArticles(undefined, undefined, limit, sortByCreatedAt)
+}
+
+
+export async function fetchAllTags() {
+	return Contentful.getTags()
+		.then((res) => {
+			console.log(res.items)
+			return res.items
+		})
+		.catch(console.error)
+
 }

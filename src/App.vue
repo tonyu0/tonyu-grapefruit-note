@@ -16,10 +16,7 @@ const pages = [
 
 <template>
   <div class="layout">
-    <router-link
-      class="m-10"
-      to="/"
-    >
+    <router-link class="m-10" to="/">
       <h1>
         {{ topTitle }}
       </h1>

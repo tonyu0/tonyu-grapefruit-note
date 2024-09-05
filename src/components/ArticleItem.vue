@@ -3,14 +3,14 @@ import { RouterLink } from 'vue-router'
 import { formatDate } from '@/utils/utils'
 
 defineProps({
-  article: {
-    type: Object,
-    required: true,
-  },
-  bordered: {
-    type: Boolean,
-    required: true,
-  },
+	article: {
+		type: Object,
+		required: true,
+	},
+	bordered: {
+		type: Boolean,
+		required: true,
+	},
 })
 </script>
 

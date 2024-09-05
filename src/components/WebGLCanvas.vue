@@ -1,9 +1,9 @@
 <template>
-  <div id="content">
-    <button
-      :class="{ '_state-show': isShowCode }"
-      @click="isShowCode = !isShowCode"
-    >
+  <div id="webgl-canvas">
+    <div id="content">
+      HTMLCanvasElement will be inserted below
+    </div>
+    <button :class="{ '_state-show': isShowCode }" @click="isShowCode = !isShowCode">
       Show Code
     </button>
     <transition name="slide">
@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import { onMounted, watch, ref } from 'vue'
-import {onBeforeRouteLeave} from 'vue-router'
+import { onBeforeRouteLeave } from 'vue-router'
 import Engine from '@/lib/engine'
 interface CanvasProps {
 	vertexShaderSource?: string
@@ -47,19 +47,29 @@ watch(props, () => {
 </script>
 
 <style scoped>
+#webgl-canvas {
+	margin: 0 10px;
+	padding: 0 10px;
+	border: solid 2px var(--background-accent-10);
+	background-color: var(--foreground-inverted);
+	text-align: center;
+}
+
+#webgl-canvas button {
+	margin: 20px;
+}
+
 code {
-	display: inline-block;
+	display: block;
 	background-color: #eeeeee;
-	border-radius: 3px;
 }
 
 ._state-show {
-	background-color: #717171;
-	text-decoration: none;
+	background-color: #bbb;
 
-	/* :after {
-    transform: rotateX(180deg);
-    margin-top: -10px;
-  } */
+	&:after {
+		transform: rotateX(180deg);
+		margin-top: -10px;
+	}
 }
 </style>
