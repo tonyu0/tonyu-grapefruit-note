@@ -277,7 +277,7 @@ article h1 a {
 
 @media (min-width: 640px) {
   .articles-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px;
   }
 }
@@ -824,13 +824,8 @@ footer {
 }
 
 .current-article__body {
-  margin-bottom: 0;
-}
-
-@media (min-width: 640px) {
-  .current-article__body {
-    margin-bottom: 24px;
-  }
+  height: 50rem;
+  margin-bottom: 24px;
 }
 
 .current-article__body p {

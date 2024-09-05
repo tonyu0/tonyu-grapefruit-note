@@ -9,7 +9,7 @@ const router = createRouter({
 			component: () => import('@/views/HomePage.vue'),
 		},
 		{
-			path: '/articles/:id',
+			path: '/articles/:category/:id',
 			name: 'article',
 			component: () => import('@/views/ArticleDetail.vue'),
 		},
@@ -22,6 +22,11 @@ const router = createRouter({
 			path: '/webgl',
 			name: 'WebGL',
 			component: () => import('@/views/WebGL.vue'),
+		},
+		{
+			path: '/search-result',
+			name: 'search-result',
+			component: () => import('@/views/SearchResult.vue'),
 		},
 	],
 	scrollBehavior() {

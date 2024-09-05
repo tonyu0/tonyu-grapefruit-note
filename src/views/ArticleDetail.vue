@@ -8,24 +8,24 @@ import MoreArticles from '@/components/MoreArticles.vue'
 // Contentful
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
-const router = useRouter()
 const route = useRoute()
 const article = ref(null)
-const moreArticles = ref(null)
-const { id } = route.params
-const categories = ['blog', 'blog2'] // TODO : improve the way searching
+const moreArticles = ref([])
+const { id, category } = route.params
 
 const setup = async () => {
-	for (const category of categories) {
-		const res = await fetchArticles(id, category, 1, false)
-		if (res.length > 0) {
-			article.value = res[0]
-			break
+	const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
+	for (const r of res) {
+		if (r.fields.slug == id) {
+			article.value = r
+		} else {
+			moreArticles.value.push(r)
 		}
 	}
 }
 setup()
 if (article.value === undefined) {
+	const router = useRouter()
 	router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
 }
 </script>
@@ -62,15 +62,20 @@ if (article.value === undefined) {
               <font-awesome-icon :icon="['far', 'fa-clock']" aria-hidden="true" />
               <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
             </span>
-
+            <!-- below exactly same code is used on ArticleItem.vue, if seems it will be used more places, think componentization -->
             <span class="tag">
-              <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
-              {{ article.sys.contentType.sys.id }}
+              <RouterLink :to="{ name: 'search-result', query: { category: `${article.sys.contentType.sys.id}` } }">
+                <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
+                {{ article.sys.contentType.sys.id }}
+              </RouterLink>
             </span>
 
             <span v-for="tag in article.metadata.tags" :key="tag.sys.id" class="tag">
-              <font-awesome-icon :icon="['fa', 'fa-tag']" aria-hidden="true" />
-              {{ tag.sys.id }}</span>
+              <RouterLink :to="{ name: 'search-result', query: { tag: `${tag.sys.id}` } }">
+                <font-awesome-icon :icon="['fa', 'fa-tag']" aria-hidden="true" />
+                {{ tag.sys.id }}
+              </RouterLink>
+            </span>
           </div>
         </div>
         <!-- <div class="current-article_coverImage">
@@ -85,11 +90,7 @@ if (article.value === undefined) {
       <!-- eslint-enable -->
 
       <hr>
-      <h1 class="current-article__title">
-        関連記事
-      </h1>
-      <!-- TODO: タグで絞って共通する記事を取得して並べる。並べるのはTopと同じようにできそう -->
-      <MoreArticles v-if="moreArticles" :articles="moreArticles" />
+      <MoreArticles :articles="moreArticles" />
     </article>
   </div>
 </template>

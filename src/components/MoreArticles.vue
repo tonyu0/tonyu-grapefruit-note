@@ -12,9 +12,9 @@ defineProps({
   <section class="more-articles">
     <div class="container">
       <h1 class="more-articles__title">
-        More Articles
+        関連記事
       </h1>
-      <div v-if="articles.length !== 0" class="articles-grid">
+      <div class="articles-grid">
         <article-item
           v-for="(article, index) in articles"
           :key="index"

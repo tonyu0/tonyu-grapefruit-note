@@ -5,6 +5,7 @@ export function formatDate(date: Date, delim: string): string
 export async function fetchArticles(
 	id: string | undefined,
 	category: string | undefined,
+	tag: string | undefined,
 	limit: number,
 	sortByCreatedAt: bool,
 ): object

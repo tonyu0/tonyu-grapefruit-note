@@ -16,16 +16,19 @@ defineProps({
 
 <template>
   <article class="article" :class="{ bordered }">
-    <RouterLink :to="`/articles/${article.fields.slug}`">
+    <RouterLink
+      :to="{ name: 'article', params: { id: `${article.fields.slug}`, category: `${article.sys.contentType.sys.id}` } }"
+    >
       <div class="article__topWrapper">
         <div class="article__imageWrapper">
           <img v-if="'image' in article.fields" :src="article.fields.image.fields.file.url" alt="" loading="lazy">
         </div>
 
-        <!-- TODO: link to category filter result -->
         <span class="tag">
-          <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
-          {{ article.sys.contentType.sys.id }}
+          <RouterLink :to="{ name: 'search-result', query: { category: `${article.sys.contentType.sys.id}` } }">
+            <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
+            {{ article.sys.contentType.sys.id }}
+          </RouterLink>
         </span>
       </div>
       <div class="article__bottomWrapper">

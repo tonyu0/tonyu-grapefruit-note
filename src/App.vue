@@ -10,7 +10,7 @@ const topTitle = 'tonyu lab'
 const pages = [
 	{ id: 0, name: 'Home', to: '/' },
 	{ id: 1, name: 'WebGL', to: '/webgl' },
-	{ id: 2, name: 'About', to: '/articles/about' },
+	{ id: 2, name: 'About', to: '/articles/blog/about' },
 ]
 </script>
 
