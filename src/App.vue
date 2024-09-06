@@ -22,7 +22,6 @@ const pages = [
       </h1>
     </router-link>
     <Header :pages="pages" />
-
     <main class="main-content">
       <RouterView :key="$route.fullPath" />
     </main>
