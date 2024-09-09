@@ -7,7 +7,7 @@ import { fetchArticles } from '@/utils/utils'
 import MoreArticles from '@/components/MoreArticles.vue'
 import ArticleDetailTOC from '@/components/ArticleDetailTOC.vue'
 // Contentful
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+// import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
 const route = useRoute()
 const article = ref(null)
@@ -17,17 +17,17 @@ const articleHTML = ref(null)
 const articleNotFound = ref(false)
 
 const loadArticle = async () => {
-	const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
+  const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
 	for (const r of res) {
-		if (r.fields.slug == id) {
-			article.value = r
+    if (r.fields.slug == id) {
+      article.value = r
 		} else {
-			moreArticles.value.push(r)
+      moreArticles.value.push(r)
 		}
 	}
 	if (article.value !== null) {
-		let s = documentToHtmlString(article.value.fields.body)
-
+    let s = article.value.fields.body
+    
 		// TODO: toc-index for ArticleDetailTOC.vue, inefficient way to insert id, should improve
 		let tocCnt = 0
 		for (let i = 0; i < s.length - 1; ++i) {

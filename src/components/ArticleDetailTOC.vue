@@ -18,6 +18,12 @@ for (const ac of props.articleContent) {
 	if (ac['nodeType'] === 'heading-1') {
 		heading1s.value.push(ac['content'][0]['value'])
 	}
+	console.log(ac)
+	// how to fetch image
+	// if ac['noteTYpe'] === 'embedded-asset-block'
+	// then ac['data'].target.fields.file
+	// then check contentTYpe === "image/jpeg"
+	// then check url, show image
 }
 </script>
 
