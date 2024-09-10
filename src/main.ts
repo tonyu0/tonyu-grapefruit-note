@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faHistory, faTag, faList } from '@fortawesome/free-solid-svg-icons'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { VueShowdown } from 'vue-showdown'
+import { VueShowdown, showdown } from 'vue-showdown'
 
 /* add icons to the library */
 library.add(faHistory)
@@ -21,4 +21,12 @@ library.add(faTag)
 library.add(faClock)
 library.add(faList)
 
-createApp(App).use(router).component('VueShowdown', VueShowdown).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+/* for TOC id jump (see ArticleDetailTOC.vue implementation) */
+// ref: https://github.com/showdownjs/showdown#valid-options
+showdown.setOption('rawHeaderId', true)
+
+createApp(App)
+	.use(router)
+	.component('VueShowdown', VueShowdown)
+	.component('font-awesome-icon', FontAwesomeIcon)
+	.mount('#app')

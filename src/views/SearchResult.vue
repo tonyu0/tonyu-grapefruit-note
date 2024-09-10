@@ -19,8 +19,8 @@ setup()
   <div class="container">
     <h1 class="more-articles__title">
       検索結果 (
-      <span v-if="category !== undefined">category: {{ category }}</span>
-      <span v-if="tag !== undefined">tag: {{ tag }}</span>
+      <span v-if="category">category: {{ category }}</span>
+      <span v-if="tag">tag: {{ tag }}</span>
       )
     </h1>
     <div v-if="articles" class="articles-grid">

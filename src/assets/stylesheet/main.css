@@ -26,7 +26,6 @@
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  scroll-margin-top: 77px;
 }
 
 button {
@@ -112,6 +111,21 @@ footer {
 .notice,
 .notice a {
   color: var(--foreground-inverted);
+}
+
+/* for transition, transition-group tag */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-enter-to, .v-leave-from {
+  opacity: 1;
 }
 
 header {
@@ -826,7 +840,7 @@ footer {
 
 .current-article__body {
   height: 50rem;
-  margin-bottom: 24px;
+  margin-bottom: 10rem;
 }
 
 .current-article__body p {
@@ -851,6 +865,8 @@ footer {
   font-weight: bold;
   padding: .6em;
   border-bottom: dotted 2px var(--background-accent-10);
+
+	scroll-margin-top: 77px;
 }
 
 .current-article__body h2 {
@@ -859,6 +875,8 @@ footer {
   padding: .6em;
   margin: .6em 0 .6em 1.2em;
   border-left: solid 16px var(--background-accent-50);
+  
+	scroll-margin-top: 77px;
 }
 
 .current-article__bodySocials {

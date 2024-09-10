@@ -6,8 +6,8 @@ import IconBack from '@/components/icons/BackIcon.vue'
 import { fetchArticles } from '@/utils/utils'
 import MoreArticles from '@/components/MoreArticles.vue'
 import ArticleDetailTOC from '@/components/ArticleDetailTOC.vue'
-// Contentful
-// import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+
+import { showdown } from 'vue-showdown'
 
 const route = useRoute()
 const article = ref(null)
@@ -17,31 +17,17 @@ const articleHTML = ref(null)
 const articleNotFound = ref(false)
 
 const loadArticle = async () => {
-  const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
+	const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
 	for (const r of res) {
-    if (r.fields.slug == id) {
-      article.value = r
+		if (r.fields.slug == id) {
+			article.value = r
 		} else {
-      moreArticles.value.push(r)
+			moreArticles.value.push(r)
 		}
 	}
-	if (article.value !== null) {
-    let s = article.value.fields.body
-    
-		// TODO: toc-index for ArticleDetailTOC.vue, inefficient way to insert id, should improve
-		let tocCnt = 0
-		for (let i = 0; i < s.length - 1; ++i) {
-			if (s.substring(i, i + 3) === '<h1') {
-				++tocCnt
-			}
-		}
-		for (let i = s.length - 2; i >= 0; --i) {
-			if (s.substring(i, i + 3) === '<h1') {
-				s = s.slice(0, i + 3) + (" id='toc-" + tocCnt.toString() + "'") + s.slice(i + 3)
-				--tocCnt
-			}
-		}
-		articleHTML.value = s
+	if (article.value) {
+		const converter = new showdown.Converter()
+		articleHTML.value = converter.makeHtml(article.value.fields.body)
 	} else {
 		articleNotFound.value = true
 	}
@@ -126,9 +112,9 @@ onUpdated(() => {
           >
         </div> -->
         </div>
-        <ArticleDetailTOC :article-content="article.fields.body.content" />
+        <ArticleDetailTOC :article-content="articleHTML" />
         <!-- eslint-disable vue/no-v-html -->
-        <div class="current-article__body" v-html="articleHTML" />
+        <vue-showdown :markdown="articleHTML" class="current-article__body" />
         <!-- eslint-enable -->
 
         <hr>

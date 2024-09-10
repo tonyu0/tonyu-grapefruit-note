@@ -25,19 +25,6 @@ const pages = [
     <main class="main-content">
       <RouterView :key="$route.fullPath" />
     </main>
-    <!-- <div class="sidebar float-right">
-        <Sidebar />
-      </div> -->
     <Footer />
   </div>
 </template>
-
-<style scoped>
-.content {
-	width: 75%;
-}
-
-.sidebar {
-	width: 25%;
-}
-</style>
