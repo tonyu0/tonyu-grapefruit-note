@@ -3,7 +3,6 @@
 import { RouterView } from 'vue-router'
 import Header from '@/components/LayoutHeader.vue'
 import Footer from '@/components/LayoutFooter.vue'
-// import Sidebar from '@/components/LayoutSidebar.vue'
 
 // page definition
 const topTitle = 'tonyu lab'

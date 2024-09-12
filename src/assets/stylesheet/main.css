@@ -38,6 +38,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  appearance: none;
 }
 
 button:hover {
@@ -839,7 +840,6 @@ footer {
 }
 
 .current-article__body {
-  height: 50rem;
   margin-bottom: 10rem;
 }
 
@@ -877,6 +877,10 @@ footer {
   border-left: solid 16px var(--background-accent-50);
   
 	scroll-margin-top: 77px;
+}
+
+.current-article__body img {
+  margin: 0 auto
 }
 
 .current-article__bodySocials {

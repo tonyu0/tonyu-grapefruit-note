@@ -8,6 +8,7 @@ import MoreArticles from '@/components/MoreArticles.vue'
 import ArticleDetailTOC from '@/components/ArticleDetailTOC.vue'
 
 import { showdown } from 'vue-showdown'
+import ModalSystem from '@/components/ModalSystem.vue'
 
 const route = useRoute()
 const article = ref(null)
@@ -15,6 +16,8 @@ const moreArticles = ref([])
 const { id, category } = route.params
 const articleHTML = ref(null)
 const articleNotFound = ref(false)
+const articleImages = ref([])
+const isImageModalVisible = ref(false)
 
 const loadArticle = async () => {
 	const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
@@ -47,12 +50,27 @@ onUpdated(() => {
 	// jump to each heading using dynamically generated id
 	// ref: https://blog.kurodigi.com/posts/vue3-dynamic-anchor-link
 	scrollToAnchor()
+	// TODO: モーダル表示時のonUpdated()でTOCに飛んでしまう。isImageModalVisible==trueのときにscrollToAnchor()ふさいでもモーダル解除時にも飛んでしまう
 
 	// if(articleNotFound.value){
 	//   const router = useRouter()
 	//   router.replace({ name: 'not-found', params: { catchAll: route.path } }) // to NotFound.vue
 	// }
 	// -> just use v-if
+
+	// load images of article detail
+	if (articleImages.value.length == 0) {
+		// onUpdated() is called every time modal become visible, so need the condition not to collect image multiple times
+		const domParser = new DOMParser()
+		const contentHTML = domParser.parseFromString(articleHTML.value, 'text/html')
+		let idx = -1
+		contentHTML.querySelectorAll('img').forEach((node) => {
+			idx += 1
+			articleImages.value.push({ id: idx, src: node.getAttribute('src') })
+			// TODO: 画像クリックでモーダル起動できるように 後付けでクリックイベント起こせるか？
+			// TODO: クリックした画像からモーダル始まるように。モーダルへインデックスprops
+		})
+	}
 })
 </script>
 <template>
@@ -113,6 +131,10 @@ onUpdated(() => {
         </div> -->
         </div>
         <ArticleDetailTOC :article-content="articleHTML" />
+        <ModalSystem v-show="isImageModalVisible" :images="articleImages" @close-modal="isImageModalVisible = false" />
+        <button class="m-5" @click="isImageModalVisible = !isImageModalVisible">
+          記事の画像一覧を表示
+        </button>
         <!-- eslint-disable vue/no-v-html -->
         <vue-showdown :markdown="articleHTML" class="current-article__body" />
         <!-- eslint-enable -->
