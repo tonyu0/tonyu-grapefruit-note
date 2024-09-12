@@ -80,14 +80,14 @@ function onClickPager(id: number) {
 </script>
 
 <template>
-  <Transition tag="div">
+  <Transition>
     <!-- all modal animation -->
     <div v-show="isVisible" class="modal-container">
       <div class="modal-overlay" @click.self="closeModal">
         <!--.self: stop propagate -->
         <div v-if="currentImage" class="modal-body">
           <div class="modal-image-container" :class="{ isLoaded: isImageLoaded }">
-            <Transition tag="div" mode="out-in" name="image">
+            <Transition mode="out-in" name="image">
               <div :key="currentImage.id">
                 <img :src="currentImage.src" alt="" class="modal-image" @load.prevent.stop="onLoadModal">
               </div>

@@ -16,7 +16,8 @@
     "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "jsxImportSource": "vue"
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
