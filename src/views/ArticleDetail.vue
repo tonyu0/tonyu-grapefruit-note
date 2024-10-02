@@ -132,7 +132,7 @@ onUpdated(() => {
         </div>
         <ArticleDetailTOC :article-content="articleHTML" />
         <ModalSystem v-show="isImageModalVisible" :images="articleImages" @close-modal="isImageModalVisible = false" />
-        <button class="m-5" @click="isImageModalVisible = !isImageModalVisible">
+        <button v-show="articleImages.length > 0" class="m-5" @click="isImageModalVisible = !isImageModalVisible">
           記事の画像一覧を表示
         </button>
         <!-- eslint-disable vue/no-v-html -->
