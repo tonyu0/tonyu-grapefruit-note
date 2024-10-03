@@ -15,24 +15,26 @@ const article = ref(null)
 const moreArticles = ref([])
 const { id, category } = route.params
 const articleHTML = ref(null)
-const articleNotFound = ref(false)
+const articleNotFound = ref(true)
 const articleImages = ref([])
 const isImageModalVisible = ref(false)
 
 const loadArticle = async () => {
 	const res = await fetchArticles(undefined, category, undefined, 7, true) // this article + more article x 6
 	for (const r of res) {
-		if (r.fields.slug == id) {
+		if (r.fields.slug === id) {
 			article.value = r
+      articleNotFound.value = false
+      // make html
+      try {
+      const converter = new showdown.Converter()
+      articleHTML.value = converter.makeHtml(article.value.fields.body)
+      } catch {
+        // error suppress for now
+      }
 		} else {
 			moreArticles.value.push(r)
 		}
-	}
-	if (article.value) {
-		const converter = new showdown.Converter()
-		articleHTML.value = converter.makeHtml(article.value.fields.body)
-	} else {
-		articleNotFound.value = true
 	}
 }
 loadArticle()
