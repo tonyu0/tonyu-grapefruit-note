@@ -5,7 +5,7 @@ import Header from '@/components/LayoutHeader.vue'
 import Footer from '@/components/LayoutFooter.vue'
 
 // page definition
-const topTitle = 'tonyu lab'
+const topTitle = 'tonyu grapefruit note'
 const pages = [
 	{ id: 0, name: 'Home', to: '/' },
 	{ id: 1, name: 'WebGL', to: '/webgl' },
