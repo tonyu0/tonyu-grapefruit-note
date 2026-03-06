@@ -50,18 +50,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: var(--background-accent-50);
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-}
+@media (prefers-color-scheme: light) {}
 
 body {
+  background-color: var(--background-accent-50);
   font-family: var(--family-sans-serif);
 }
 
@@ -125,7 +117,8 @@ footer {
   opacity: 0;
 }
 
-.v-enter-to, .v-leave-from {
+.v-enter-to,
+.v-leave-from {
   opacity: 1;
 }
 
@@ -866,7 +859,7 @@ footer {
   padding: .6em;
   border-bottom: dotted 2px var(--background-accent-10);
 
-	scroll-margin-top: 77px;
+  scroll-margin-top: 77px;
 }
 
 .current-article__body h2 {
@@ -875,8 +868,8 @@ footer {
   padding: .6em;
   margin: .6em 0 .6em 1.2em;
   border-left: solid 16px var(--background-accent-50);
-  
-	scroll-margin-top: 77px;
+
+  scroll-margin-top: 77px;
 }
 
 .current-article__body img {
