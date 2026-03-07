@@ -43,18 +43,18 @@ function afterTransition(el) {
 </script>
 
 <template>
-  <dl class="accordion">
-    <dt :class="{ is_open: isShown }" role="button" @click="isShown = !isShown">
-      {{ title }}
-    </dt>
-    <transition @enter="enter" @after-enter="afterTransition" @leave="leave" @after-leave="afterTransition">
-      <dd v-show="isShown" class="accordion-body">
-        <div class="accordion-txt">
-          <slot />
-        </div>
-      </dd>
-    </transition>
-  </dl>
+	<dl class="accordion">
+		<dt :class="{ is_open: isShown }" role="button" @click="isShown = !isShown">
+			{{ title }}
+		</dt>
+		<transition @enter="enter" @after-enter="afterTransition" @leave="leave" @after-leave="afterTransition">
+			<dd v-show="isShown" class="accordion-body">
+				<div class="accordion-txt">
+					<slot />
+				</div>
+			</dd>
+		</transition>
+	</dl>
 </template>
 
 <style scoped>

@@ -14,16 +14,16 @@ const pages = [
 </script>
 
 <template>
-  <div class="layout">
-    <router-link class="m-10" to="/">
-      <h1>
-        {{ topTitle }}
-      </h1>
-    </router-link>
-    <Header :pages="pages" />
-    <main class="main-content">
-      <RouterView :key="$route.fullPath" />
-    </main>
-    <Footer />
-  </div>
+	<div class="layout">
+		<router-link class="m-10" to="/">
+			<h1>
+				{{ topTitle }}
+			</h1>
+		</router-link>
+		<Header :pages="pages" />
+		<main class="main-content">
+			<RouterView :key="$route.fullPath" />
+		</main>
+		<Footer />
+	</div>
 </template>

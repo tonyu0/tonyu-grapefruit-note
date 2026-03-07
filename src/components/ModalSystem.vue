@@ -80,34 +80,30 @@ function onClickPager(id: number) {
 </script>
 
 <template>
-  <Transition>
-    <!-- all modal animation -->
-    <div v-show="isVisible" class="modal-container">
-      <div class="modal-overlay" @click.self="closeModal">
-        <!--.self: stop propagate -->
-        <div v-if="currentImage" class="modal-body">
-          <div class="modal-image-container" :class="{ isLoaded: isImageLoaded }">
-            <Transition mode="out-in" name="image">
-              <div :key="currentImage.id">
-                <img :src="currentImage.src" alt="" class="modal-image" @load.prevent.stop="onLoadModal">
-              </div>
-            </Transition>
-          </div>
-        </div>
-        <button class="button modalButton modalButton__prev" @click="onClickPrev">
-          PREV
-        </button>
-        <button class="button modalButton modalButton__next" @click="onClickNext">
-          NEXT
-        </button>
-        <ol class="carousel-pager">
-          <li v-for="(image, id) in images" :key="image.id">
-            <button tabindex="0" :class="{ 'is-current': id == selectedimageID }" @click="onClickPager(id)" />
-          </li>
-        </ol>
-      </div>
-    </div>
-  </Transition>
+	<Transition>
+		<!-- all modal animation -->
+		<div v-show="isVisible" class="modal-container">
+			<div class="modal-overlay" @click.self="closeModal">
+				<!--.self: stop propagate -->
+				<div v-if="currentImage" class="modal-body">
+					<div class="modal-image-container" :class="{ isLoaded: isImageLoaded }">
+						<Transition mode="out-in" name="image">
+							<div :key="currentImage.id">
+								<img :src="currentImage.src" alt="" class="modal-image" @load.prevent.stop="onLoadModal" />
+							</div>
+						</Transition>
+					</div>
+				</div>
+				<button class="button modalButton modalButton__prev" @click="onClickPrev">PREV</button>
+				<button class="button modalButton modalButton__next" @click="onClickNext">NEXT</button>
+				<ol class="carousel-pager">
+					<li v-for="(image, id) in images" :key="image.id">
+						<button tabindex="0" :class="{ 'is-current': id == selectedimageID }" @click="onClickPager(id)" />
+					</li>
+				</ol>
+			</div>
+		</div>
+	</Transition>
 </template>
 
 <style scoped>

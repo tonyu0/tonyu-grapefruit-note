@@ -15,40 +15,40 @@ defineProps({
 </script>
 
 <template>
-  <article class="article" :class="{ bordered }">
-    <RouterLink
-      :to="{ name: 'article', params: { id: `${article.fields.slug}`, category: `${article.sys.contentType.sys.id}` } }"
-    >
-      <div class="article__topWrapper">
-        <div class="article__imageWrapper">
-          <img v-if="'image' in article.fields" :src="article.fields.image.fields.file.url" alt="" loading="lazy">
-        </div>
+	<article class="article" :class="{ bordered }">
+		<RouterLink
+			:to="{ name: 'article', params: { id: `${article.fields.slug}`, category: `${article.sys.contentType.sys.id}` } }"
+		>
+			<div class="article__topWrapper">
+				<div class="article__imageWrapper">
+					<img v-if="'image' in article.fields" :src="article.fields.image.fields.file.url" alt="" loading="lazy" />
+				</div>
 
-        <span class="tag">
-          <RouterLink :to="{ name: 'search-result', query: { category: `${article.sys.contentType.sys.id}` } }">
-            <font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
-            {{ article.sys.contentType.sys.id }}
-          </RouterLink>
-        </span>
-      </div>
-      <div class="article__bottomWrapper">
-        <h1 class="article__title">
-          {{ article.fields.title }}
-        </h1>
-        <div class="article__detail">
-          <span class="article-date">
-            <font-awesome-icon :icon="['fa', 'fa-history']" aria-hidden="true" />
-            <time>{{ formatDate(new Date(article.sys.createdAt)) }}</time>
-          </span>
-          <span class="article-date">
-            <font-awesome-icon :icon="['far', 'fa-clock']" aria-hidden="true" />
-            <time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
-          </span>
-          <div class="article__detailInnerAuthor">
-            {{ `${article.author == null ? '' : article.author}` /* TODO: author name */ }}
-          </div>
-        </div>
-      </div>
-    </RouterLink>
-  </article>
+				<span class="tag">
+					<RouterLink :to="{ name: 'search-result', query: { category: `${article.sys.contentType.sys.id}` } }">
+						<font-awesome-icon :icon="['fa', 'fa-list']" aria-hidden="true" />
+						{{ article.sys.contentType.sys.id }}
+					</RouterLink>
+				</span>
+			</div>
+			<div class="article__bottomWrapper">
+				<h1 class="article__title">
+					{{ article.fields.title }}
+				</h1>
+				<div class="article__detail">
+					<span class="article-date">
+						<font-awesome-icon :icon="['fa', 'fa-history']" aria-hidden="true" />
+						<time>{{ formatDate(new Date(article.sys.createdAt)) }}</time>
+					</span>
+					<span class="article-date">
+						<font-awesome-icon :icon="['far', 'fa-clock']" aria-hidden="true" />
+						<time>{{ formatDate(new Date(article.sys.updatedAt)) }}</time>
+					</span>
+					<div class="article__detailInnerAuthor">
+						{{ `${article.author == null ? '' : article.author}` /* TODO: author name */ }}
+					</div>
+				</div>
+			</div>
+		</RouterLink>
+	</article>
 </template>
