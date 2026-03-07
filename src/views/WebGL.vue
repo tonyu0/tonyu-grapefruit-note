@@ -1,18 +1,16 @@
 <template>
-  <div id="webgl-content">
-    <aside>
-      <h1>Shader Menu</h1>
-      <select v-model="fragmentShaderSource">
-        <option disabled value="">
-          Select one
-        </option>
-        <option v-for="fs in fragmentShaderList" :key="fs.name" :value="fs.source">
-          {{ fs.name }}
-        </option>
-      </select>
-    </aside>
-    <WebGLCanvas :vertex-shader-source="vertexShaderSource" :fragment-shader-source="fragmentShaderSource" />
-  </div>
+	<div id="webgl-content">
+		<aside>
+			<h1>Shader Menu</h1>
+			<select v-model="fragmentShaderSource">
+				<option disabled value="">Select one</option>
+				<option v-for="fs in fragmentShaderList" :key="fs.name" :value="fs.source">
+					{{ fs.name }}
+				</option>
+			</select>
+		</aside>
+		<WebGLCanvas :vertex-shader-source="vertexShaderSource" :fragment-shader-source="fragmentShaderSource" />
+	</div>
 </template>
 
 <script setup>

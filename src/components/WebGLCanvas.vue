@@ -1,12 +1,10 @@
 <template>
-  <div id="webgl-canvas">
-    <div id="content">
-      HTMLCanvasElement will be inserted below
-    </div>
-    <AccordionSystem title="Show Code" style="max-width: 960px">
-      <code>{{ fragmentShaderSource }}</code>
-    </AccordionSystem>
-  </div>
+	<div id="webgl-canvas">
+		<div id="content">HTMLCanvasElement will be inserted below</div>
+		<AccordionSystem title="Show Code" style="max-width: 960px">
+			<code>{{ fragmentShaderSource }}</code>
+		</AccordionSystem>
+	</div>
 </template>
 
 <script lang="ts" setup>

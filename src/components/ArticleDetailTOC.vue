@@ -37,21 +37,21 @@ function scrollTo(to: string) {
 </script>
 
 <template>
-  <div class="toc">
-    <div class="toc-content">
-      <label class="toc-title" @click.prevent="showTOCs = !showTOCs">目次 {{ showTOCs ? '[閉じる]' : '[開く]' }}</label>
-      <transition-group>
-        <!-- maybe toggle at @after-leave is good-->
-        <ul v-if="showTOCs">
-          <li v-for="(TOC, idx) in TOCs" :key="idx" class="toc-list" :class="TOC.tagName">
-            <RouterLink :to="`#${TOC.textContent}`" @click="scrollTo('#' + TOC.textContent)">
-              {{ TOC.textContent }}
-            </RouterLink>
-          </li>
-        </ul>
-      </transition-group>
-    </div>
-  </div>
+	<div class="toc">
+		<div class="toc-content">
+			<label class="toc-title" @click.prevent="showTOCs = !showTOCs">目次 {{ showTOCs ? '[閉じる]' : '[開く]' }}</label>
+			<transition-group>
+				<!-- maybe toggle at @after-leave is good-->
+				<ul v-if="showTOCs">
+					<li v-for="(TOC, idx) in TOCs" :key="idx" class="toc-list" :class="TOC.tagName">
+						<RouterLink :to="`#${TOC.textContent}`" @click="scrollTo('#' + TOC.textContent)">
+							{{ TOC.textContent }}
+						</RouterLink>
+					</li>
+				</ul>
+			</transition-group>
+		</div>
+	</div>
 </template>
 
 <style scoped>

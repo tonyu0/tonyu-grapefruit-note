@@ -23,25 +23,25 @@ setup()
 </script>
 
 <template>
-  <div class="container">
-    <div class="mb-6">
-      <label for="filter">検索ワード</label>
-      <input v-model.trim="filterText" name="filter" placeholder="検索...">
-      <p>[{{ filterText }}] で検索 (未実装)</p>
-    </div>
-    <h1 class="more-articles__title">
-      検索結果 (
-      <span v-if="category">category: {{ category }}</span>
-      <span v-if="tag">tag: {{ tag }}</span>
-      )
-    </h1>
-    <div v-if="filteredArticles" class="articles-grid">
-      <article-item
-        v-for="(article, index) in articles"
-        :key="index"
-        :article="article"
-        :bordered="index !== articles.length - 1"
-      />
-    </div>
-  </div>
+	<div class="container">
+		<div class="mb-6">
+			<label for="filter">検索ワード</label>
+			<input v-model.trim="filterText" name="filter" placeholder="検索..." />
+			<p>[{{ filterText }}] で検索 (未実装)</p>
+		</div>
+		<h1 class="more-articles__title">
+			検索結果 (
+			<span v-if="category">category: {{ category }}</span>
+			<span v-if="tag">tag: {{ tag }}</span>
+			)
+		</h1>
+		<div v-if="filteredArticles" class="articles-grid">
+			<article-item
+				v-for="(article, index) in articles"
+				:key="index"
+				:article="article"
+				:bordered="index !== articles.length - 1"
+			/>
+		</div>
+	</div>
 </template>
