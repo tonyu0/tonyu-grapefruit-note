@@ -19,6 +19,11 @@ const router = createRouter({
 			component: () => import('@/views/NotFound.vue'),
 		},
 		{
+			path: '/works',
+			name: 'Works',
+			component: () => import('@/views/WorkList.vue'),
+		},
+		{
 			path: '/webgl',
 			name: 'WebGL',
 			component: () => import('@/views/WebGL.vue'),
