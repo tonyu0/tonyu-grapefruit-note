@@ -7,8 +7,8 @@ import Footer from '@/components/LayoutFooter.vue'
 // page definition
 const topTitle = 'tonyu grapefruit note'
 const pages = [
-	{ id: 0, name: 'Home', to: '/' },
-	{ id: 1, name: 'WebGL', to: '/webgl' },
+	{ id: 0, name: 'Notes', to: '/' },
+	{ id: 1, name: 'Works', to: '/works' },
 	{ id: 2, name: 'About', to: '/articles/blog/about' },
 ]
 </script>

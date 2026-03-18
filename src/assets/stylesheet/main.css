@@ -13,7 +13,7 @@
   --background-accent: #e4eaf1;
   --background-accent-10: #280071;
   --background-accent-50: #e9e0f8;
-  --background-subdued: #ffed4c;
+  --background-subdued: #c1a1f3;
   --shadow: 0px 0px 10px rgba(23, 41, 64, 0.1);
 
   font-synthesis: none;
@@ -101,11 +101,6 @@ footer {
   background-color: var(--background-accent-10);
 }
 
-.notice,
-.notice a {
-  color: var(--foreground-inverted);
-}
-
 /* for transition, transition-group tag */
 .v-enter-active,
 .v-leave-active {
@@ -127,19 +122,30 @@ header {
   position: sticky;
   top: 0;
   background-color: var(--foreground-inverted);
-}
 
-header nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 0 10vw;
-  width: calc(100vw - 15px);
-  /* for not depending on whether scroll bar exists */
+  /* header is 2% of viewport height */
+  /* width: calc(100vw - 15px); */
 }
 
-header nav a {
-  padding: 16px 32px;
+header a {
+  /*  for expanding header links clickable area. */
+  /* Arrange header links using parents 'flex' and expand the area of links by css here */
+  padding: 2vh 10vw;
+  color: var(--foreground-inverted);
+}
+
+.work-item {
+  padding: 2vh 10vw;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.work-item a {
+  padding: 2vh 10vw;
+  background-color: var(--background-subdued);
 }
 
 @media (min-width: 640px) {
