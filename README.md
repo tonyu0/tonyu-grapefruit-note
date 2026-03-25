@@ -1,5 +1,9 @@
 ## 🚀 Quick Start
 
+[![ci](https://github.com/tonyu0/tonyu-grapefruit-note/actions/workflows/ci.yml/badge.svg)](https://github.com/tonyu0/tonyu-grapefruit-note/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+
 **Clone**
 
 ```bash
