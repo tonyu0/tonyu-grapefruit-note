@@ -8,8 +8,6 @@ const tags = ref(null)
 const setup = async () => {
 	articles.value = await fetchAllArticles(10, true)
 	tags.value = await fetchAllTags()
-	console.log(articles.value)
-	console.log(tags.value)
 }
 setup()
 </script>

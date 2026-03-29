@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const pages = [
-	{ id: 0, name: 'WebGL', to: '/webgl' },
-	{ id: 1, name: 'Test', to: '/test' },
+	{ id: 0, name: 'Shader Art (WebGL)', to: '/shader-art' },
+	{ id: 1, name: 'Game Project (WebGL)', to: '/game-project' },
 ]
 </script>
 

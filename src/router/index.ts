@@ -24,9 +24,14 @@ const router = createRouter({
 			component: () => import('@/views/WorkList.vue'),
 		},
 		{
-			path: '/webgl',
-			name: 'WebGL',
-			component: () => import('@/views/WebGL.vue'),
+			path: '/shader-art',
+			name: 'Shader Art (WebGL)',
+			component: () => import('@/views/ShaderArtPage.vue'),
+		},
+		{
+			path: '/game-project',
+			name: 'Game Priject (WebGL)',
+			component: () => import('@/views/GameProjectPage.vue'),
 		},
 		{
 			path: '/search-result',

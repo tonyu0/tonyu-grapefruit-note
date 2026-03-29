@@ -86,6 +86,7 @@ export class GLBuffer {
 	 * @param normalized Indicates if the data should be normalized.
 	 */
 	public bind(normalized = false): void {
+		// TODO: VAO
 		GLUtilities.gl.bindBuffer(this._targetBufferType, this._buffer)
 		if (this._hasAttributeLocation) {
 			for (const itr of this._attributes) {
@@ -95,7 +96,7 @@ export class GLBuffer {
 					this._dataType,
 					normalized,
 					this._stride,
-					itr.offset * this._dataType,
+					itr.offset * this._typeSize,
 				)
 				GLUtilities.gl.enableVertexAttribArray(itr.location)
 			}

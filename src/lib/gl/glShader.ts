@@ -26,6 +26,10 @@ export default class GLShader {
 		}
 	}
 
+	public destroy(): void {
+		GLUtilities.gl.deleteProgram(this._program)
+	}
+
 	/** The name of this shader */
 	public get name(): string {
 		return this._name
