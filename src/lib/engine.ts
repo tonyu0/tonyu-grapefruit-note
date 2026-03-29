@@ -1,7 +1,6 @@
 ﻿import { GLUtilities } from '@/lib/gl/gl'
 import GLShader from '@/lib/gl/glShader'
 import { AttrInfo, GLBuffer } from '@/lib/gl/glBuffer'
-import { canvasPlane } from '@/lib/primitives'
 
 export default class Engine {
 	private _canvas: HTMLCanvasElement
@@ -16,7 +15,6 @@ export default class Engine {
 	public constructor() {
 		this._startTime = new Date().getTime()
 		this._canvas = GLUtilities.initialize()
-		GLUtilities.gl.clearColor(0.6, 0, 0.9, 1)
 		// GLUtilities.gl.enable(GLUtilities.gl.CULL_FACE)
 		GLUtilities.gl.enable(GLUtilities.gl.DEPTH_TEST)
 		GLUtilities.gl.depthFunc(GLUtilities.gl.LEQUAL)
@@ -53,7 +51,7 @@ export default class Engine {
 		// const colorPosition = this._shader.getUniformLocation('u_color')
 		// GLUtilities.gl.uniform4f(colorPosition, 1, 0.5, 0, 1)
 		const time = (new Date().getTime() - this._startTime) * 0.001
-		GLUtilities.gl.clearColor(0, 0, 0, 0)
+		GLUtilities.gl.clearColor(0.6, 0, 0.9, 1)
 		GLUtilities.gl.clearDepth(1.0)
 		GLUtilities.gl.clearStencil(0)
 		GLUtilities.gl.clear(
@@ -123,10 +121,10 @@ export default class Engine {
 
 	public loadShaders(vertexShaderSource: string, fragmentShaderSource: string): void {
 		this._shader = new GLShader('basic', vertexShaderSource, fragmentShaderSource)
+	}
 
-		// TODO : it is wired, every time this load shader, update vertices and indices, so make them more independent
-		const primitive = canvasPlane()
-		this.createVertexBuffer(primitive.vertices)
-		this.createIndexBuffer(primitive.indices)
+	public loadModel(vertices: number[], indices: number[]) {
+		this.createVertexBuffer(vertices)
+		this.createIndexBuffer(indices)
 	}
 }

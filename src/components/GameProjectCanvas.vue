@@ -1,17 +1,14 @@
 <template>
 	<div id="webgl-canvas">
 		<div id="content">HTMLCanvasElement will be inserted below</div>
-		<AccordionSystem title="Show Code" style="max-width: 960px">
-			<code>{{ fragmentShaderSource }}</code>
-		</AccordionSystem>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, watch } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
-import AccordionSystem from './AccordionSystem.vue'
 import Engine from '@/lib/engine'
+import { canvasPlane } from '@/lib/primitives'
 interface CanvasProps {
 	vertexShaderSource?: string
 	fragmentShaderSource?: string
@@ -29,14 +26,18 @@ onMounted(() => {
 })
 
 // stop drawing loop before leaving this page
-onBeforeRouteLeave((to, from, next) => {
+onBeforeRouteLeave(() => {
 	engine.stopLoop()
-	next()
+	// Instead of deprecated "next()", simply write "return" to allow transitioning.
+	// Navigation guard, which is a Vue Router's wrapper of History API, enable various actions before actual transition.
+	return true
 })
 
 watch(props, () => {
 	if (props.vertexShaderSource && props.fragmentShaderSource) {
 		engine.loadShaders(props.vertexShaderSource, props.fragmentShaderSource)
+		const primitive = canvasPlane()
+		engine.loadModel(primitive.vertices, primitive.indices)
 	}
 })
 </script>

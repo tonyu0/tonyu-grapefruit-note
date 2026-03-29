@@ -9,17 +9,17 @@
 				</option>
 			</select>
 		</aside>
-		<WebGLCanvas :vertex-shader-source="vertexShaderSource" :fragment-shader-source="fragmentShaderSource" />
+		<ShaderArtCanvas :vertex-shader-source="vertexShaderSource" :fragment-shader-source="fragmentShaderSource" />
 	</div>
 </template>
 
 <script setup>
-import WebGLCanvas from '@/components/WebGLCanvas.vue'
+import ShaderArtCanvas from '@/components/ShaderArtCanvas.vue'
 import { ref } from 'vue'
-import basicVS from '@/lib/shaders/basicVS.vert'
-import basicFS from '@/lib/shaders/basicFS.frag'
-import okuyukiFS from '@/lib/shaders/okuyuki.frag'
-import enFS from '@/lib/shaders/en.frag'
+import basicVS from '@/assets/shaders/common/basicVS.vert'
+import basicFS from '@/assets/shaders/common/basicFS.frag'
+import okuyukiFS from '@/assets//shaders/art/okuyuki.frag'
+import enFS from '@/assets/shaders/art/en.frag'
 // const shaderType = ref(0)
 const vertexShaderSource = ref(basicVS)
 const fragmentShaderSource = ref('')
